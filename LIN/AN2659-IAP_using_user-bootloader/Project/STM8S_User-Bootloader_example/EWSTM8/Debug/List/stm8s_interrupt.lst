@@ -1,0 +1,40 @@
+###############################################################################
+#                                                                             #
+# IAR Assembler V1.40.1.50106 for STM8                  05/Sep/2014  10:36:48 #
+# Copyright 2010-2013 IAR Systems AB.                                         #
+#                                                                             #
+#    Source file  =  E:\Project\STM8S\STM8S_StdPeriph_Lib_V2.1.0\AN2659-IAP_u #
+#                    sing_user-bootloader\Project\STM8S_User-Bootloader_examp #
+#                    le\EWSTM8\stm8s_interrupt.s                              #
+#    Command line =  E:\Project\STM8S\STM8S_StdPeriph_Lib_V2.1.0\AN2659-IAP_u #
+#                    sing_user-bootloader\Project\STM8S_User-Bootloader_examp #
+#                    le\EWSTM8\stm8s_interrupt.s -M<> -r -ld                  #
+#                    E:\Project\STM8S\STM8S_StdPeriph_Lib_V2.1.0\AN2659-IAP_u #
+#                    sing_user-bootloader\Project\STM8S_User-Bootloader_examp #
+#                    le\EWSTM8\Debug\List\ --code_model small --data_model    #
+#                    medium -o E:\Project\STM8S\STM8S_StdPeriph_Lib_V2.1.0\AN #
+#                    2659-IAP_using_user-bootloader\Project\STM8S_User-Bootlo #
+#                    ader_example\EWSTM8\Debug\Obj\                           #
+#    List file    =  E:\Project\STM8S\STM8S_StdPeriph_Lib_V2.1.0\AN2659-IAP_u #
+#                    sing_user-bootloader\Project\STM8S_User-Bootloader_examp #
+#                    le\EWSTM8\Debug\List\stm8s_interrupt.lst                 #
+#    Object file  =  E:\Project\STM8S\STM8S_StdPeriph_Lib_V2.1.0\AN2659-IAP_u #
+#                    sing_user-bootloader\Project\STM8S_User-Bootloader_examp #
+#                    le\EWSTM8\Debug\Obj\stm8s_interrupt.o                    #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+##############################################################################
+# Module ?interrupt                                                          #
+##############################################################################
+
+ 
+ 128 bytes in section .intvec          , module ?interrupt
+   3 bytes in section .near_func.text  , module ?interrupt
+ 
+   3 bytes of CODE  memory  in module ?interrupt
+ 128 bytes of CONST memory  in module ?interrupt
+
+Errors: none
+Warnings: none

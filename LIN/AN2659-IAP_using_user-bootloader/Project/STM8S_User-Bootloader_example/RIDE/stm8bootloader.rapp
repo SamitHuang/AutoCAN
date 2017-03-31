@@ -1,0 +1,51 @@
+
+<ApplicationBuild Header="stm8bootloader" Extern=".\stm8bootloader.rapp" Path=".\stm8bootloader.rapp" OutputFile=".\stm8bootloader.aof" sate="98" AsyncBuild="" >
+	<Group Header="Source Files" Marker="-1" OutputFile="" sate="96" AsyncBuild="" >
+		<NodeASM Path=".\stm8s_ob.asm" Header="stm8s_ob.asm" Marker="-1" AsyncBuild="" OutputFile=".\stm8s_ob.obj" sate="0" />
+		<NodeASM Path=".\stm8s_interrupt.asm" Header="stm8s_interrupt.asm" Marker="-1" AsyncBuild="" OutputFile=".\stm8s_interrupt.obj" sate="0" />
+		<NodeC Path="..\src\main.c" Header="main.c" Marker="-1" AsyncBuild="" OutputFile=".\main.obj" sate="0" />
+																											
+	</Group>
+	<Options>
+		<Config Header="Standard" >
+			<Set Header="ApplicationBuild" >
+				<Section Header="General" >
+					<Property Header="TargetFamily" Value="ST7" />
+																																																																																																	
+				</Section>
+				<Section Header="Directories" >
+					<Property Header="IncDir" Value="$(RkitInc);$(RkitInc)\ST7;..\inc" Removable="1" />
+							
+				</Section>
+					
+			</Set>
+			<Set Header="Target" >
+				<Section Header="ProcessorST7" >
+					<Property Header="Processor" Value="STM8S208MB" Removable="1" />
+																																																																																																	
+				</Section>
+				<Section Header="ToolSetST7" >
+					<Property Header="BuildToolSetST7" Value="ST7\RaisonanceTools.config" Removable="1" />
+					<Property Header="ArelocInfo" Value="" Removable="1" />
+							
+				</Section>
+				<Section Header="DebugST7" >
+					<Property Header="DebugTool_STM8" Value="RLINK_STM8" Removable="1" />
+																																																													
+				</Section>
+					
+			</Set>
+			<Set Header="RCST7" >
+				<Section Header="Model" >
+					<Property Header="GlobalMemory" Value="DGC(DATA)" Removable="1" />
+																																																																																								
+				</Section>
+				<Section Header="OPTIM" >
+					<Property Header="OTLEVEL" Value="0" Removable="1" />
+																																											
+				</Section>
+																																	
+			</Set>
+		</Config>
+	</Options>
+</ApplicationBuild>

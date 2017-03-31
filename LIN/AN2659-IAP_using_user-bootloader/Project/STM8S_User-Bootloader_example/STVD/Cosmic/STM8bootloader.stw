@@ -1,0 +1,24 @@
+;	STMicroelectronics Workspace file
+
+[Version]
+Keyword=ST7Workspace-V0.7
+
+[Project0]
+Filename=stm8bootloader.stp
+Dependencies=
+
+[Project1]
+Filename=..\..\..\..\..\project\stm8s_stdperiphz_003bootloader\stvd\cosmic\stm8s003.stp
+Dependencies=
+
+[Project2]
+Filename=c:\users\pc\desktop\bootloader\loader.stp
+Dependencies=
+
+[Project3]
+Filename=..\..\..\..\..\project\stm8s_stdperiphz_userbootloader\stm8s_stdperiphz_userbooloader.stp
+Dependencies=
+[Options]
+ActiveProject=stm8s_stdperiphz_userbooloader
+ActiveConfig=Debug
+AddSortedElements=1

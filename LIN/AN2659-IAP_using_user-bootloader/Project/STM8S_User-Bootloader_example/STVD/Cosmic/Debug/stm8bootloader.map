@@ -1,0 +1,324 @@
+
+Map of Debug\stm8bootloader.sm8 from link file Debug\stm8bootloader.lkf - Fri Sep 05 09:34:44 2014
+
+
+                               --------
+                               Segments
+                               --------
+
+start 00008080 end 000080a2 length    34 segment .const
+start 00008117 end 0000890a length  2035 segment .text
+start 00004000 end 00004000 length     0 segment .eeprom
+start 00000000 end 00000001 length     1 segment .bsct, initialized
+start 000080af end 000080b0 length     1 segment .bsct, from
+start 00000001 end 00000091 length   144 segment .ubsct
+start 00000091 end 00000091 length     0 segment .bit
+start 00000091 end 00000091 length     0 segment .share
+start 00000100 end 00000167 length   103 segment .FLASH_CODE, initialized
+start 000080b0 end 00008117 length   103 segment .FLASH_CODE, from
+start 00000167 end 00000167 length     0 segment .data
+start 00000167 end 00000167 length     0 segment .bss
+start 00000000 end 00000e9a length  3738 segment .debug
+start 00008000 end 00008080 length   128 segment .const
+start 000080a2 end 000080af length    13 segment .init
+
+
+                               -------
+                               Modules
+                               -------
+
+D:\Program Files (x86)\COSMIC\CXSTM8\Lib\crtsi0.sm8:
+start 00008117 end 00008162 length    75 section .text
+start 00000167 end 00000167 length     0 section .bss
+start 00000001 end 00000001 length     0 section .ubsct
+
+Debug\main.o:
+start 00000000 end 00000001 length     1 section .bsct
+start 00000001 end 00000087 length   134 section .ubsct
+start 00000000 end 00000d06 length  3334 section .debug
+start 00008080 end 000080a2 length    34 section .const
+start 00008162 end 000081ea length   136 section .text
+start 000081ea end 00008255 length   107 section .text
+start 00008255 end 0000827f length    42 section .text
+start 0000827f end 000082df length    96 section .text
+start 000082df end 00008300 length    33 section .text
+start 00008300 end 00008391 length   145 section .text
+start ******** end ******** length     0 section .text *** removed ***
+start 00008391 end 000084c7 length   310 section .text
+start 000084c7 end 00008661 length   410 section .text
+start 00008661 end 00008692 length    49 section .text
+start 00008692 end 000086c0 length    46 section .text
+start 000086c0 end 000086d9 length    25 section .text
+start 000086d9 end 00008705 length    44 section .text
+start 00008705 end 00008719 length    20 section .text
+start 00008719 end 0000878a length   113 section .text
+start 0000878a end 000087d7 length    77 section .text
+start 000087d7 end 000087e0 length     9 section .text
+start 000087e0 end 000087e9 length     9 section .text
+start 00000100 end 00000167 length   103 section .FLASH_CODE
+start 000087e9 end 0000880f length    38 section .text
+start ******** end ******** length     0 section .text *** removed ***
+
+(D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)fctcpy.o:
+start 0000880f end 0000883c length    45 section .text
+
+(D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)cmulx.o:
+start 0000883c end 00008850 length    20 section .text
+
+(D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)ladc.o:
+start 00008850 end 00008861 length    17 section .text
+
+(D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)lcmp.o:
+start 00008861 end 00008881 length    32 section .text
+
+(D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)lgadc.o:
+start 00008881 end 00008891 length    16 section .text
+
+(D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)lgadd.o:
+start 00008891 end 000088a8 length    23 section .text
+
+(D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)lreg.o:
+start 00000087 end 0000008b length     4 section .ubsct
+
+(D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)lsbc.o:
+start 000088a8 end 000088bf length    23 section .text
+
+(D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)lsub.o:
+start 000088bf end 000088d7 length    24 section .text
+
+(D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)ltor.o:
+start 000088d7 end 000088e9 length    18 section .text
+
+(D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)lursh.o:
+start 000088e9 end 000088f8 length    15 section .text
+
+(D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)rtol.o:
+start 000088f8 end 0000890a length    18 section .text
+
+(D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)xreg.o:
+start 0000008b end 0000008e length     3 section .ubsct
+
+(D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)yreg.o:
+start 0000008e end 00000091 length     3 section .ubsct
+
+Debug\stm8_interrupt_vector.o:
+start 00000d06 end 00000e9a length   404 section .debug
+start ******** end ******** length     0 section .text *** removed ***
+start 00008000 end 00008080 length   128 section .const
+
+
+                             -----------
+                             Stack usage
+                             -----------
+
+Debug\main.o:
+_DeInitBootloader              2   (2)
+_FLASH_ProgramOptionByte       6   (6)
+_GO_Command_Process           20   (8)
+_GT_Command_Process            6   (2)
+_Master_ident                 13   (4)
+_Mem_ProgramBlock             17   (15)
+_ProcessCommands              57   (5)
+_RM_Command_Process           21   (7)
+_Receive                       9   (5)
+_ReceiveAddress               12   (3)
+_ReceiveCount                 14   (5)
+_Transmit                      4   (4)
+_WM_Command_Process           52   (11)
+_WriteBuffer                  41   (7)
+_WriteBufferFlash             34   (17)
+_main                     >   59   (2) *** pointer() ***
+_protocol_init                 6   (6)
+_unlock_DATA                   2   (2)
+_unlock_PROG                   2   (2)
+__fctcpy                       3   (3)
+
+Stack size: 59
+
+
+                              ---------
+                              Call tree
+                              ---------
+   1 > __stext: (0)
+
+   2 > _main: (2)
+   3      + _DeInitBootloader: (2)
+   4      + _Master_ident: (4)
+   5      |    + _Receive: (5)
+   6      |    |    + _Transmit: (4)
+          |    | 
+          | 
+   7      + _ProcessCommands: (5)
+   8      |    + _GO_Command_Process: (8)
+   9      |    |    + _ReceiveAddress: (3)
+  10      |    |    |    + _Receive --> 5
+  11      |    |    |    + _Transmit --> 6
+          |    |    | 
+  12      |    |    + _Transmit --> 6
+          |    | 
+  13      |    + _GT_Command_Process: (2)
+  14      |    |    + _Transmit --> 6
+          |    | 
+  15      |    + _RM_Command_Process: (7)
+  16      |    |    + _ReceiveAddress --> 9
+  17      |    |    + _ReceiveCount: (5)
+  18      |    |    |    + _Receive --> 5
+  19      |    |    |    + _Transmit --> 6
+          |    |    | 
+  20      |    |    + _Transmit --> 6
+          |    | 
+  21      |    + _Receive --> 5
+  22      |    + _Transmit --> 6
+  23      |    + _WM_Command_Process: (11)
+  24      |    |    + _Receive --> 5
+  25      |    |    + _ReceiveAddress --> 9
+  26      |    |    + _ReceiveCount --> 17
+  27      |    |    + _Transmit --> 6
+  28      |    |    + _WriteBuffer: (7)
+  29      |    |    |    + _FLASH_ProgramOptionByte: (6)
+  30      |    |    |    + _WriteBufferFlash: (17)
+  31      |    |    |    |    + _Mem_ProgramBlock: (15)
+          |    |    |    | 
+          |    |    | 
+          |    | 
+          | 
+  32      + _Transmit --> 6
+  33      + __fctcpy: (3)
+  34      + _protocol_init: (6)
+  35      + _unlock_DATA: (2)
+  36      + _unlock_PROG: (2)
+       
+  37   _DeInitBootloader --> 3
+
+  38   _FLASH_ProgramOptionByte --> 29
+
+  39   _GO_Command_Process --> 8
+
+  40   _GT_Command_Process --> 13
+
+  41   _Master_ident --> 4
+
+  42   _Mem_ProgramBlock --> 31
+
+  43   _ProcessCommands --> 7
+
+  44   _RM_Command_Process --> 15
+
+  45   _Receive --> 5
+
+  46   _ReceiveAddress --> 9
+
+  47   _ReceiveCount --> 17
+
+  48   _Transmit --> 6
+
+  49   _WM_Command_Process --> 23
+
+  50   _WriteBuffer --> 28
+
+  51   _WriteBufferFlash --> 30
+
+  52   __fctcpy --> 33
+
+  53   _protocol_init --> 34
+
+  54   _unlock_DATA --> 35
+
+  55   _unlock_PROG --> 36
+
+
+
+                               -------
+                               Symbols
+                               -------
+
+_CLK_GetClockFreq          ********   *** removed from Debug\main.o ***
+_CheckAddress              ********   *** removed from Debug\main.o ***
+_DataBuffer                00000003   defined in Debug\main.o section .ubsct
+_DeInitBootloader          00008661   defined in Debug\main.o section .text
+_FLASH_ProgramOptionByte   000087e9   defined in Debug\main.o section .text
+_GO_Command_Process        000082df   defined in Debug\main.o section .text
+_GT_Command_Process        00008255   defined in Debug\main.o section .text
+_GoAddress                 00000085   defined in Debug\main.o section .ubsct
+_MainUserApplication       00008080   defined in Debug\main.o section .const
+_Master_ident              00008705   defined in Debug\main.o section .text
+_Mem_ProgramBlock          00000100   defined in Debug\main.o section .FLASH_CODE, initialized
+_ProcessCommands           000081ea   defined in Debug\main.o section .text
+_RM_Command_Process        0000827f   defined in Debug\main.o section .text
+_Receive                   000086d9   defined in Debug\main.o section .text
+_ReceiveAddress            00008719   defined in Debug\main.o section .text
+_ReceiveCount              0000878a   defined in Debug\main.o section .text
+_ReceivedData              00000001   defined in Debug\main.o section .ubsct
+_RoutinesInRAM             00000000   defined in Debug\main.o section .bsct, initialized
+_Transmit                  000086c0   defined in Debug\main.o section .text
+_UserISR_IRQ               00009000   defined in Debug\stm8_interrupt_vector.o
+_WM_Command_Process        00008300   defined in Debug\main.o section .text
+_WriteBuffer               00008391   defined in Debug\main.o section .text
+_WriteBufferFlash          000084c7   defined in Debug\main.o section .text
+__endmem                   000001ff   defined in command file
+                                      *** not used ***
+__endzp                    00000091   defined in command file section .ubsct
+                                      used in D:\Program Files (x86)\COSMIC\CXSTM8\Lib\crtsi0.sm8
+__fctcpy                   0000880f   defined in (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)fctcpy.o section .text
+                                      used in Debug\main.o
+__idesc__                  000080a2   defined in linker section .init
+                                      used in D:\Program Files (x86)\COSMIC\CXSTM8\Lib\crtsi0.sm8
+                                              (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)fctcpy.o
+__memory                   00000167   defined in command file section .bss
+                                      used in D:\Program Files (x86)\COSMIC\CXSTM8\Lib\crtsi0.sm8
+__stack                    000003ff   defined in command file
+                                      used in D:\Program Files (x86)\COSMIC\CXSTM8\Lib\crtsi0.sm8
+__startmem                 00000167   defined in command file section .bss
+                                      *** not used ***
+__stext                    00008117   defined in D:\Program Files (x86)\COSMIC\CXSTM8\Lib\crtsi0.sm8 section .text
+                                      used in Debug\stm8_interrupt_vector.o
+__vectab                   00008000   defined in Debug\stm8_interrupt_vector.o section .const
+_exit                      00008160   defined in D:\Program Files (x86)\COSMIC\CXSTM8\Lib\crtsi0.sm8 section .text
+_main                      00008162   defined in Debug\main.o section .text
+                                      used in D:\Program Files (x86)\COSMIC\CXSTM8\Lib\crtsi0.sm8
+_protocol_init             00008692   defined in Debug\main.o section .text
+_unlock_DATA               000087e0   defined in Debug\main.o section .text
+_unlock_PROG               000087d7   defined in Debug\main.o section .text
+c_cmulx                    0000883c   defined in (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)cmulx.o section .text
+                                      used in Debug\main.o
+c_ladc                     00008850   defined in (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)ladc.o section .text
+                                      used in Debug\main.o
+c_lcmp                     00008861   defined in (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)lcmp.o section .text
+                                      used in Debug\main.o
+c_lgadc                    00008881   defined in (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)lgadc.o section .text
+                                      used in Debug\main.o
+c_lgadd                    00008891   defined in (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)lgadd.o section .text
+                                      used in Debug\main.o
+c_lreg                     00000087   defined in (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)lreg.o section .ubsct
+                                      used in Debug\main.o
+                                              (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)cmulx.o
+                                              (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)ladc.o
+                                              (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)lcmp.o
+                                              (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)ldiv.o
+                                              (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)lgadd.o
+                                              (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)lneg.o
+                                              (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)lsbc.o
+                                              (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)lsub.o
+                                              (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)ltor.o
+                                              (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)lursh.o
+                                              (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)rtol.o
+c_lsbc                     000088a8   defined in (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)lsbc.o section .text
+                                      used in Debug\main.o
+c_lsub                     000088bf   defined in (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)lsub.o section .text
+                                      used in Debug\main.o
+c_ltor                     000088d7   defined in (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)ltor.o section .text
+                                      used in Debug\main.o
+c_lursh                    000088e9   defined in (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)lursh.o section .text
+                                      used in Debug\main.o
+c_rtol                     000088f8   defined in (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)rtol.o section .text
+                                      used in Debug\main.o
+c_x                        0000008b   defined in (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)xreg.o section .ubsct
+                                      used in D:\Program Files (x86)\COSMIC\CXSTM8\Lib\crtsi0.sm8
+                                              Debug\main.o
+                                              (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)fctcpy.o
+                                              (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)lsdiv.o
+                                              (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)ldiv.o
+                                              (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)xymvx.o
+c_y                        0000008e   defined in (D:\Program Files (x86)\COSMIC\CXSTM8\Lib\libm0.sm8)yreg.o section .ubsct
+                                      used in D:\Program Files (x86)\COSMIC\CXSTM8\Lib\crtsi0.sm8
+f_NonHandledInterrupt      ********   *** removed from Debug\stm8_interrupt_vector.o ***

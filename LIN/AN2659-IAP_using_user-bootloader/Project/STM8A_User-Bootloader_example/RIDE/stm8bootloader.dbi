@@ -1,0 +1,21 @@
+[Application]
+ApplicationPath=C:\Documents and Settings\jerome semette\Desktop\AN2659-STM8_IAP_using_user-bootloader\Project\STM8A_User-Bootloader_example\RIDE\stm8bootloader.aof
+Format=AOF
+CodeOffset=0x0
+LoaderTool=ST7
+Target=ST7
+DebugTool=RLINK_STM8
+ApplicationComponents=
+[Device]
+Name=STM8AF51A
+[Debug]
+Explore=No
+Startup=1
+StartupSymb=main
+ToolName=RLINK_STM8
+[SIM-ST7]
+Crystal=12.000
+OByte0=FC
+OByte1=FF
+[SimFile]
+path=C:\Program Files\Raisonance\Ride\sim\ST7\STM8AF61Axx.sim

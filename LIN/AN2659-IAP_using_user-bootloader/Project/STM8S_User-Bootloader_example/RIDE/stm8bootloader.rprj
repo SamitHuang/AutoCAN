@@ -1,0 +1,4 @@
+
+<Project Header="Project 'stm8bootloader'" Path=".\stm8bootloader.rprj" Project="Yes" OutputFile="" sate="96" ActiveApp="stm8bootloader" AsyncBuild="" >
+	<ApplicationBuild Header="stm8bootloader" Extern=".\stm8bootloader.rapp" Path=".\stm8bootloader.rapp" OutputFile=".\stm8bootloader.aof" sate="98" AsyncBuild="" />
+</Project>

@@ -1,0 +1,53 @@
+MACRO ASSEMBLER STM8L15X_OB                        11/25/10 11:20:25 PAGE     1
+
+
+DOS MACRO ASSEMBLER MASTM8 V2.30.10.175
+OBJECT MODULE PLACED IN C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8L_USER-BOOTLOADER_EXAMPLE\RIDE\STM8L15X_OB.OBJ
+ASSEMBLER INVOKED BY: MODESTM8 QUIET EP CS DB OJ(C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8L_USER-BOOTLOADER_EXAMPLE\RIDE\STM8L15X_OB.OBJ) PIN(C:\PROGRAM FILES\RAISONANCE\RIDE\INC;C:\PROGRAM FILES\RAISONANCE\RIDE\INC\ST7;..\INC) PR(C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8L_USER-BOOTLOADER_EXAMPLE\RIDE\STM8L15X_OB.LST) XR GENERATEDEPFILE 
+
+LOC      OBJ            LINE     SOURCE
+                           1     ;This file contains the values to program in the option bytes.
+                           2     ;You can change the values below according to the device datasheet.
+                           3     ;Be careful to respect the complement bytes,
+                           4     ; or the default values of the option bytes will be used.
+                           5     
+                           6     ;See the device datasheet for more information on the meaning of each bit.
+                           7     
+                           8     
+------ ------------        9     cseg at 04800h
+                          10     
+4800   AA                 11     db 0AAh ;OPT1
+4801   00                 12     db 000h ;OPT2
+4802   00                 13     db 000h ;OPT3
+4803   00                 14     db 000h ;OPT4
+4804   00                 15     db 000h ;OPT5
+4805   00                 16     db 000h ;OPT6
+4806   00                 17     db 000h ;OPT7
+4807   00                 18     db 000h ;OPT8
+4808   00                 19     db 000h ;OPT9
+4809   00                 20     db 000h ;OPT10
+480A   01                 21     db 001h ;OPT11
+                          22     
+                          23     end
+MACRO ASSEMBLER STM8L15X_OB                        11/25/10 11:20:25 PAGE     2
+
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES             REFERENCES
+
+STM8L15X_OB. . . .  N   NUMB -------
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE      =      11    ----
+   DATA SIZE      =    ----    ----
+   BIT SIZE       =    ----    ----
+END OF MODULE INFORMATION.
+
+
+
+ASSEMBLY COMPLETE.   0 WARNING(S)   0 ERROR(S)

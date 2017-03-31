@@ -1,0 +1,63 @@
+MACRO ASSEMBLER STM8A_OB                           11/25/10 11:14:38 PAGE     1
+
+
+DOS MACRO ASSEMBLER MASTM8 V2.30.10.175
+OBJECT MODULE PLACED IN C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8A_USER-BOOTLOADER_EXAMPLE\RIDE\STM8A_OB.OBJ
+ASSEMBLER INVOKED BY: MODESTM8 QUIET EP CS DB OJ(C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8A_USER-BOOTLOADER_EXAMPLE\RIDE\STM8A_OB.OBJ) PIN(C:\PROGRAM FILES\RAISONANCE\RIDE\INC;C:\PROGRAM FILES\RAISONANCE\RIDE\INC\ST7;..\INC) PR(C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8A_USER-BOOTLOADER_EXAMPLE\RIDE\STM8A_OB.LST) XR GENERATEDEPFILE 
+
+LOC      OBJ            LINE     SOURCE
+                           1     ;This file contains the values to program in the option bytes.
+                           2     ;You can change the values below according to the device datasheet.
+                           3     ;Be careful to respect the complement bytes,
+                           4     ; or the default values of the option bytes will be used.
+                           5     
+                           6     ;See the device datasheet for more information on the meaning of each bit.
+                           7     
+------ ------------        8     cseg at 04800h
+                           9     
+4800   00                 10     db 000h ;LOCKBYTE
+                          11     
+4801   00                 12     db 000h ;OPT1
+4802   FF                 13     db 0FFh ;NOPT1
+                          14     
+4803   00                 15     db 000h ;OPT2
+4804   FF                 16     db 0FFh ;NOPT2
+                          17     
+4805   00                 18     db 000h ;OPT3
+4806   FF                 19     db 0FFh ;NOPT3
+                          20     
+4807   00                 21     db 000h ;OPT4
+4808   FF                 22     db 0FFh ;NOPT4
+                          23     
+4809   00                 24     db 000h ;OPT5
+480A   FF                 25     db 0FFh ;NOPT5
+                          26     
+480B   00                 27     db 000h ;OPT6
+480C   FF                 28     db 0FFh ;NOPT6
+                          29     
+480D   00                 30     db 000h ;OPT7
+480E   FF                 31     db 0FFh ;NOPT7
+                          32     
+                          33     end
+MACRO ASSEMBLER STM8A_OB                           11/25/10 11:14:38 PAGE     2
+
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES             REFERENCES
+
+STM8A_OB . . . . .  N   NUMB -------
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE      =      15    ----
+   DATA SIZE      =    ----    ----
+   BIT SIZE       =    ----    ----
+END OF MODULE INFORMATION.
+
+
+
+ASSEMBLY COMPLETE.   0 WARNING(S)   0 ERROR(S)

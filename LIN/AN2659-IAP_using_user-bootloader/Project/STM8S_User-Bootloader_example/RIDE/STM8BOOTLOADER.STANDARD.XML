@@ -1,0 +1,93 @@
+<aoffile FileName="STM8BOOTLOADER" N1="252">
+   <modulelist>
+      <module Name="STM8S_OB" Origin="OBJ(C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\RIDE\STM8S_OB.OBJ)">
+      <filelist>
+         <file FI="0001"  Time="4cee3a37"  FName="C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\RIDE\STM8S_OB.ASM"/>
+         <file FI="0002"  Time="4cee3a37"  FName="C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\RIDE\STM8S_OB.LST"/>
+      </filelist>
+      </module>
+      <module Name="STM8S_INTERRUPT" Origin="OBJ(C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\RIDE\STM8S_INTERRUPT.OBJ)">
+      <filelist>
+         <file FI="0001"  Time="4cee3a37"  FName="C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\RIDE\STM8S_INTERRUPT.ASM"/>
+         <file FI="0002"  Time="4cee3a37"  FName="C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\RIDE\STM8S_INTERRUPT.LST"/>
+      </filelist>
+      </module>
+      <module Name="MAIN" Origin="OBJ(C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\RIDE\MAIN.OBJ)">
+      <filelist>
+         <file FI="0001"  Time="4cee3a37"  FName="C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.SRC"/>
+         <file FI="0002"  Time="4cee3a37"  FName="C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C"/>
+      </filelist>
+      <fctlist>
+         <fct Name="main" FirstLine= "0" LastLine= "0"  FileIndex= "0x2" FileName= "C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C" Addr="0x85F7" TypeIndex= "0x0" Type= " main"   UsedReg= "0x0" Flags= "0x0"   CodeSize= "240" StackSize= "0" ParamSize= "0"/>
+         <fct Name="ProcessCommands" FirstLine= "0" LastLine= "0"  FileIndex= "0x2" FileName= "C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C" Addr="0x87AB" TypeIndex= "0x0" Type= " ?ProcessCommands"   UsedReg= "0x0" Flags= "0x0"   CodeSize= "178" StackSize= "0" ParamSize= "0"/>
+         <fct Name="GT_Command_Process" FirstLine= "0" LastLine= "0"  FileIndex= "0x2" FileName= "C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C" Addr="0x8BDA" TypeIndex= "0x0" Type= " ?GT_Command_Process"   UsedReg= "0x0" Flags= "0x0"   CodeSize= "43" StackSize= "0" ParamSize= "0"/>
+         <fct Name="RM_Command_Process" FirstLine= "0" LastLine= "0"  FileIndex= "0x2" FileName= "C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C" Addr="0x88FC" TypeIndex= "0x0" Type= " ?RM_Command_Process"   UsedReg= "0x0" Flags= "0x0"   CodeSize= "145" StackSize= "0" ParamSize= "0"/>
+         <fct Name="GO_Command_Process" FirstLine= "0" LastLine= "0"  FileIndex= "0x2" FileName= "C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C" Addr="0x8BA8" TypeIndex= "0x0" Type= " ?GO_Command_Process"   UsedReg= "0x0" Flags= "0x0"   CodeSize= "50" StackSize= "0" ParamSize= "0"/>
+         <fct Name="WM_Command_Process" FirstLine= "0" LastLine= "0"  FileIndex= "0x2" FileName= "C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C" Addr="0x86E7" TypeIndex= "0x0" Type= " ?WM_Command_Process"   UsedReg= "0x0" Flags= "0x0"   CodeSize= "196" StackSize= "0" ParamSize= "0"/>
+         <fct Name="CheckAddress" FirstLine= "0" LastLine= "0"  FileIndex= "0x2" FileName= "C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C" Addr="0x0" TypeIndex= "0x0" Type= " ?CheckAddress"   UsedReg= "0x0" Flags= "0x0"   CodeSize= "132" StackSize= "0" ParamSize= "0"/>
+         <fct Name="WriteBuffer" FirstLine= "0" LastLine= "0"  FileIndex= "0x2" FileName= "C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C" Addr="0x8080" TypeIndex= "0x0" Type= " ?WriteBuffer"   UsedReg= "0x0" Flags= "0x0"   CodeSize= "560" StackSize= "0" ParamSize= "0"/>
+         <fct Name="WriteBufferFlash" FirstLine= "0" LastLine= "0"  FileIndex= "0x2" FileName= "C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C" Addr="0x82B0" TypeIndex= "0x0" Type= " ?WriteBufferFlash"   UsedReg= "0x0" Flags= "0x0"   CodeSize= "535" StackSize= "0" ParamSize= "0"/>
+         <fct Name="DeInitBootloader" FirstLine= "0" LastLine= "0"  FileIndex= "0x2" FileName= "C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C" Addr="0x8B42" TypeIndex= "0x0" Type= " ?DeInitBootloader"   UsedReg= "0x0" Flags= "0x0"   CodeSize= "51" StackSize= "0" ParamSize= "0"/>
+         <fct Name="protocol_init" FirstLine= "0" LastLine= "0"  FileIndex= "0x2" FileName= "C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C" Addr="0x8ABA" TypeIndex= "0x0" Type= " ?protocol_init"   UsedReg= "0x0" Flags= "0x0"   CodeSize= "69" StackSize= "0" ParamSize= "0"/>
+         <fct Name="Transmit" FirstLine= "0" LastLine= "0"  FileIndex= "0x2" FileName= "C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C" Addr="0x8AFF" TypeIndex= "0x0" Type= " ?Transmit"   UsedReg= "0x0" Flags= "0x0"   CodeSize= "67" StackSize= "0" ParamSize= "0"/>
+         <fct Name="Receive" FirstLine= "0" LastLine= "0"  FileIndex= "0x2" FileName= "C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C" Addr="0x8A74" TypeIndex= "0x0" Type= " ?Receive"   UsedReg= "0x0" Flags= "0x0"   CodeSize= "70" StackSize= "0" ParamSize= "0"/>
+         <fct Name="Master_ident" FirstLine= "0" LastLine= "0"  FileIndex= "0x2" FileName= "C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C" Addr="0x8C50" TypeIndex= "0x0" Type= " ?Master_ident"   UsedReg= "0x0" Flags= "0x0"   CodeSize= "23" StackSize= "0" ParamSize= "0"/>
+         <fct Name="ReceiveAddress" FirstLine= "0" LastLine= "0"  FileIndex= "0x2" FileName= "C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C" Addr="0x84C7" TypeIndex= "0x0" Type= " ?ReceiveAddress"   UsedReg= "0x0" Flags= "0x0"   CodeSize= "304" StackSize= "0" ParamSize= "0"/>
+         <fct Name="ReceiveCount" FirstLine= "0" LastLine= "0"  FileIndex= "0x2" FileName= "C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C" Addr="0x885D" TypeIndex= "0x0" Type= " ?ReceiveCount"   UsedReg= "0x0" Flags= "0x0"   CodeSize= "159" StackSize= "0" ParamSize= "0"/>
+         <fct Name="unlock_PROG" FirstLine= "0" LastLine= "0"  FileIndex= "0x2" FileName= "C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C" Addr="0x8D27" TypeIndex= "0x0" Type= " ?unlock_PROG"   UsedReg= "0x0" Flags= "0x0"   CodeSize= "9" StackSize= "0" ParamSize= "0"/>
+         <fct Name="unlock_DATA" FirstLine= "0" LastLine= "0"  FileIndex= "0x2" FileName= "C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C" Addr="0x8D30" TypeIndex= "0x0" Type= " ?unlock_DATA"   UsedReg= "0x0" Flags= "0x0"   CodeSize= "9" StackSize= "0" ParamSize= "0"/>
+         <fct Name="Mem_ProgramBlock" FirstLine= "0" LastLine= "0"  FileIndex= "0x2" FileName= "C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C" Addr="0x0" TypeIndex= "0x0" Type= " ?Mem_ProgramBlock"   UsedReg= "0x0" Flags= "0x0"   CodeSize= "163" StackSize= "0" ParamSize= "0"/>
+         <fct Name="FLASH_ProgramOptionByte" FirstLine= "0" LastLine= "0"  FileIndex= "0x2" FileName= "C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C" Addr="0x8A1A" TypeIndex= "0x0" Type= " ?FLASH_ProgramOptionByte"   UsedReg= "0x0" Flags= "0x0"   CodeSize= "90" StackSize= "0" ParamSize= "0"/>
+         <fct Name="CLK_GetClockFreq" FirstLine= "0" LastLine= "0"  FileIndex= "0x2" FileName= "C:\DOCUMENTS AND SETTINGS\JEROME SEMETTE\DESKTOP\AN2659-STM8_IAP_USING_USER-BOOTLOADER\PROJECT\STM8S_USER-BOOTLOADER_EXAMPLE\SRC\MAIN.C" Addr="0x0" TypeIndex= "0x0" Type= " ?CLK_GetClockFreq"   UsedReg= "0x0" Flags= "0x0"   CodeSize= "110" StackSize= "0" ParamSize= "0"/>
+      </fctlist>
+      </module>
+      <module Name="CHARTOL" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="ACCIX328" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="ADD3232" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="DIVS3232" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="DIVU3232" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="SUBIX32" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="ADDIX32" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="IX32" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="MULU3232" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="MV4_BC2ISA" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="MV4_BC2SK" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="MV4_ISA2BC" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="MV4_PG2BC" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="MV4_PG2IX1" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="MV4_PG2SK1" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="NEG32" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="SUB3232" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="SRL328" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="CPU3232IX" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="_MEMCPY" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="REGISTERS" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="STARTUP_V_Z" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="MEMCPY" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+      <module Name="?STATINIT" Origin="LIB(C:\PROGRAM FILES\RAISONANCE\RIDE\LIB\ST7\RCSTM8.LIB)">
+      </module>
+   </modulelist>
+</aoffile>
