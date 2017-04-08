@@ -11,7 +11,7 @@
 
 
 
-
+//todo: 将协议中所有位，写入一个共用结构体，以成员名调用
 #ifdef BOARD_099
 KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOA,GPIO_Pin_4,18,0,0,0,0},		//KEY1 AVM_Skey ; 
@@ -47,18 +47,66 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 #endif
 #ifdef BOARD_099B
 KeyIO_t indKeyIO[IND_KEY_NUM] = {
-											{GPIOA,GPIO_Pin_4,18,0,0,0,0},		//KEY1 DVD_TEL
-											{GPIOA,GPIO_Pin_5,19, GPIOB,GPIO_Pin_11,6,ID_AVM},	//KEY2 DVD MODE；LED: LDWS Skey LED
-											{GPIOA,GPIO_Pin_6,17, 0,0,0,0},		//KEY3 DVD MENU; 
+											{GPIOA,GPIO_Pin_4,32,0,0,0,0},		//KEY1 DVD_TEL
+											{GPIOA,GPIO_Pin_5,25, GPIOB,GPIO_Pin_11,6,ID_AVM},	//KEY2 LDWS Skey；LED: LDWS Skey LED
+											{GPIOA,GPIO_Pin_6,24, 0,0,0,0},		//KEY3 DVD MENU; 
 											{GPIOA,GPIO_Pin_7,15, GPIOB,GPIO_Pin_10,2,ID_ESP},	//KEY4 ESC Off  LED: ESC LED
 											{GPIOB,GPIO_Pin_0,16,	GPIOB,GPIO_Pin_2,15,ID_ESP},	//KEY5 HDC 			LED: HDC LED ??????
 											{GPIOB,GPIO_Pin_1,26,0,0},		//KEY6 DVD NAVI	
 											{GPIOC,GPIO_Pin_15,6,GPIOB,GPIO_Pin_3,SP_BIT_FRONT_RADAR,ID_PDC},		//KEY7 Front Radar: 
-											{GPIOC,GPIO_Pin_14,7,GPIOB,GPIO_Pin_5,SP_BIT_BSA_SYS_STS,ID_PDC},		//KEY8 DVD SET			LED: BSA LED
-											{GPIOC,GPIO_Pin_13,20,GPIOB,GPIO_Pin_7,1,ID_HUD},		//KEY9 DVD Radio: 		LED: HUD SKey LED
-											{GPIOB,GPIO_Pin_6,21,0,0},		//KEY10 DVD Seekup
-											{GPIOB,GPIO_Pin_4,22,0,0},		//KEY11 DVD Seekdown
+											{GPIOC,GPIO_Pin_14,27,GPIOB,GPIO_Pin_5,SP_BIT_BSA_SYS_STS,ID_PDC},		//KEY8 DVD SET			LED: BSA LED
+											{GPIOC,GPIO_Pin_13,33,GPIOB,GPIO_Pin_7,1,ID_HUD},		//KEY9 DVD Radio: 		LED: HUD SKey LED
+											{GPIOB,GPIO_Pin_6,34,0,0},		//KEY10 DVD Seekup
+											{GPIOB,GPIO_Pin_4,35,0,0},		//KEY11 DVD Seekdown
 											//{GPIOB,GPIO_Pin_6,9,0,0},		//KEY12 NC	LED: StartStop LED (A:NC)
+											};
+#endif
+#ifdef BOARD_099C
+KeyIO_t indKeyIO[IND_KEY_NUM] = {
+											{GPIOA,GPIO_Pin_4,32,0,0,0,0},		//KEY1 DVD_TEL
+											{GPIOA,GPIO_Pin_5,19, GPIOB,GPIO_Pin_11,6,ID_AVM},	//KEY2 DVD MODE；LED: LDWS Skey LED
+											{GPIOA,GPIO_Pin_6,18, 0,0,0,0},		//KEY3 AVM Skey; 
+											{GPIOA,GPIO_Pin_7,15, GPIOB,GPIO_Pin_10,2,ID_ESP},	//KEY4 ESC Off  LED: ESC LED
+											{GPIOB,GPIO_Pin_0,16,	GPIOB,GPIO_Pin_2,15,ID_ESP},	//KEY5 HDC 			LED: HDC LED ??????
+											{GPIOB,GPIO_Pin_1,26,0,0},		//KEY6 DVD NAVI	
+											{GPIOC,GPIO_Pin_15,6,GPIOB,GPIO_Pin_3,SP_BIT_FRONT_RADAR,ID_PDC},		//KEY7 Front Radar: 
+											{GPIOC,GPIO_Pin_14,7,GPIOB,GPIO_Pin_5,SP_BIT_BSA_SYS_STS,ID_PDC},		//KEY8 BSA Switch			LED: BSA LED
+											{GPIOC,GPIO_Pin_13,33,GPIOB,GPIO_Pin_7,1,ID_HUD},		//KEY9 DVD Radio: 		LED: HUD SKey LED
+											{GPIOB,GPIO_Pin_6,34,0,0},		//KEY10 DVD Seekup
+											{GPIOB,GPIO_Pin_4,35,0,0},		//KEY11 DVD Seekdown
+											//{GPIOB,GPIO_Pin_6,9,0,0},		//KEY12 NC	LED: StartStop LED (A:NC)
+											};
+#endif
+#ifdef BOARD_099D	//跟B相近, 多了StartStopSwitch
+KeyIO_t indKeyIO[IND_KEY_NUM] = {
+											{GPIOA,GPIO_Pin_4,32,0,0,0,0},		//KEY1 DVD_TEL
+											{GPIOA,GPIO_Pin_5,25, GPIOB,GPIO_Pin_11,6,ID_AVM},	//KEY2 LDWS Skey；LED: LDWS Skey LED
+											{GPIOA,GPIO_Pin_6,24, 0,0,0,0},		//KEY3 DVD MENU; 
+											{GPIOA,GPIO_Pin_7,15, GPIOB,GPIO_Pin_10,2,ID_ESP},	//KEY4 ESC Off  LED: ESC LED
+											{GPIOB,GPIO_Pin_0,16,	GPIOB,GPIO_Pin_2,15,ID_ESP},	//KEY5 HDC 			LED: HDC LED ??????
+											{GPIOB,GPIO_Pin_1,26,0,0},		//KEY6 DVD NAVI	
+											{GPIOC,GPIO_Pin_15,6,GPIOB,GPIO_Pin_3,SP_BIT_FRONT_RADAR,ID_PDC},		//KEY7 Front Radar: 
+											{GPIOC,GPIO_Pin_14,27,GPIOB,GPIO_Pin_5,SP_BIT_BSA_SYS_STS,ID_PDC},		//KEY8 DVD SET			LED: BSA LED
+											{GPIOC,GPIO_Pin_13,33,GPIOB,GPIO_Pin_7,1,ID_HUD},		//KEY9 DVD Radio: 		LED: HUD SKey LED
+											{GPIOB,GPIO_Pin_6,34,0,0},		//KEY10 DVD Seekup
+											{GPIOB,GPIO_Pin_4,35,0,0},		//KEY11 DVD Seekdown
+											{GPIOA,GPIO_Pin_15,SP_KEY_STARTSTOP,GPIOB,GPIO_Pin_9,SP_BIT_EMS_STARTSTOP,ID_EMS},		//KEY12 StartStopSwith (A:NC)	LED: StartStop LED (A:NC)
+											};
+#endif
+#ifdef BOARD_099E	//跟C相近,多了StartStopSwitch
+KeyIO_t indKeyIO[IND_KEY_NUM] = {
+											{GPIOA,GPIO_Pin_4,32,0,0,0,0},		//KEY1 DVD_TEL
+											{GPIOA,GPIO_Pin_5,19, GPIOB,GPIO_Pin_11,6,ID_AVM},	//KEY2 DVD MODE；LED: LDWS Skey LED
+											{GPIOA,GPIO_Pin_6,18, 0,0,0,0},		//KEY3 AVM Skey; 
+											{GPIOA,GPIO_Pin_7,15, GPIOB,GPIO_Pin_10,2,ID_ESP},	//KEY4 ESC Off  LED: ESC LED
+											{GPIOB,GPIO_Pin_0,16,	GPIOB,GPIO_Pin_2,15,ID_ESP},	//KEY5 HDC 			LED: HDC LED ??????
+											{GPIOB,GPIO_Pin_1,26,0,0},		//KEY6 DVD NAVI	
+											{GPIOC,GPIO_Pin_15,6,GPIOB,GPIO_Pin_3,SP_BIT_FRONT_RADAR,ID_PDC},		//KEY7 Front Radar: 
+											{GPIOC,GPIO_Pin_14,7,GPIOB,GPIO_Pin_5,SP_BIT_BSA_SYS_STS,ID_PDC},		//KEY8 BSA Switch			LED: BSA LED
+											{GPIOC,GPIO_Pin_13,33,GPIOB,GPIO_Pin_7,1,ID_HUD},		//KEY9 DVD Radio: 		LED: HUD SKey LED
+											{GPIOB,GPIO_Pin_6,34,0,0},		//KEY10 DVD Seekup
+											{GPIOB,GPIO_Pin_4,35,0,0},		//KEY11 DVD Seekdown
+											{GPIOA,GPIO_Pin_15,SP_KEY_STARTSTOP,GPIOB,GPIO_Pin_9,SP_BIT_EMS_STARTSTOP,ID_EMS},		//KEY12 StartStopSwith (A:NC)	LED: StartStop LED (A:NC)
 											};
 #endif
 

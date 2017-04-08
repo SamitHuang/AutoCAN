@@ -10,11 +10,28 @@ typedef enum
 }keyName_tt;
 
 //#define BOARD_099 1
-#define BOARD_099A 1
+//#define BOARD_099A 1
+//#define BOARD_099B 1
+//#define BOARD_099C 1
+//#define BOARD_099D 1
+#define BOARD_099E 1
 
 #ifdef BOARD_099
 #define IND_KEY_NUM 11
-#else
+#endif
+#ifdef BOARD_099A
+#define IND_KEY_NUM 12
+#endif
+#ifdef BOARD_099B
+#define IND_KEY_NUM 11
+#endif
+#ifdef BOARD_099C
+#define IND_KEY_NUM 11
+#endif
+#ifdef BOARD_099D
+#define IND_KEY_NUM 12
+#endif
+#ifdef BOARD_099E
 #define IND_KEY_NUM 12
 #endif
 
