@@ -13,9 +13,9 @@ typedef enum
 #define BOARD_099A 1
 
 #ifdef BOARD_099
-#define IND_KEY_NUM 12
-#else
 #define IND_KEY_NUM 11
+#else
+#define IND_KEY_NUM 12
 #endif
 
 #define SP_KEY_STARTSTOP  9
@@ -37,6 +37,8 @@ u8 KeyScan(void);
 void LEDUpdate(u8 *datRec, u32 id);
 void EncoderInit(void);
 char EncoderRead(void);
+void LEDSMSet(GPIO_TypeDef* GPIOx,uint16_t PINx,u8 val);
+void LEDFlashSM();
 
 //°´¼ü»º´æ
 typedef union key075

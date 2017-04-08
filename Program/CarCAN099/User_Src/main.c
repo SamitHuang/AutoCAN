@@ -11,6 +11,8 @@ u8 trig=0;
 void NVIC_Configuration(void);
 void IWDG_Configuration(void);
 
+//#define DEBUG_MODE 1
+
 
 /********************************************
 ********************************************/
@@ -36,20 +38,10 @@ int main(void)
 	//UART1_init(SysClock,9600); //串口1初始化
 	UART2_init(19200);
 
-#if(0)  //(CAN_MODE_NOW==CAN_MODE_LOOPBACK)
-	TestRx=CAN_Polling();
-	if (TestRx == FAILED)
-    GPIO_SetBits(GPIOB, GPIO_Pin_14);
-  else
-    GPIO_ResetBits(GPIOB, GPIO_Pin_14);
-
-	TestRx=CAN_Interrupt();
-	if (TestRx == FAILED)
-    GPIO_SetBits(GPIOB, GPIO_Pin_15);
-  else
-    GPIO_ResetBits(GPIOB, GPIO_Pin_15);
-#endif
+#ifndef DEBUG_MODE
 	IWDG_Configuration();
+#endif
+
 //normal mode
 	CANInit();
 //#if(CAN_REC_DISABLE)
@@ -67,6 +59,8 @@ int main(void)
 //	TxMessage.Data[7] = 0xA7;
 		
 	tPre = millis();
+	
+//	LEDSMSet(GPIOA,GPIO_Pin_4,2);
 	while(1)
 	{
 		if( millis() >= tPre + 10)
@@ -77,6 +71,8 @@ int main(void)
 			tPre = millis();
 			//keysBuffPre = keysBuff;
 			KeyScan();
+			//控制BSA指示灯的闪烁
+			LEDFlashSM();
 			if(++tDiv >=2)
 			{
 				tDiv=0;
@@ -90,19 +86,12 @@ int main(void)
 				Uart2PutInt32(CAN1->ESR); 
 		//		Uart2PutChar(0x01);
 				logDiv=0;
+#ifndef DEBUG_MODE
 				IWDG_ReloadCounter(); //喂狗
+#endif
 			}
-			/*
-			if(0)
-			{
-				static char rotDirPre=0;
-				tDiv=0;
-				rotDirPre=rotDir;
-				rotDir=EncoderRead();
-				if((rotDir!=0) || (rotDir!=rotDirPre))
-					trig=1;
-			}*/
-			//printf("Test Cnt: %d\r\n",);
+			
+			
 		}
 		
 	}

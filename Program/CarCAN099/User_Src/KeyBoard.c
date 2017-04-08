@@ -6,6 +6,10 @@
 
 //非一位控制的开关量. Todo: 写得更具有通用性。{ID_ESP,ID_AVM,ID_PDC,ID_HUD,ID_NVS}
 #define SP_BIT_EMS_STARTSTOP 50
+#define SP_BIT_BSA_SYS_STS 22
+
+
+
 
 #ifdef BOARD_099
 KeyIO_t indKeyIO[IND_KEY_NUM] = {
@@ -16,11 +20,11 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOB,GPIO_Pin_0,16,	GPIOB,GPIO_Pin_2,15,ID_ESP},	//KEY5 HDC 			LED: HDC LED ??????
 											{GPIOB,GPIO_Pin_1,26,0,0},		//KEY6 DVD NAVI	
 											{GPIOC,GPIO_Pin_15,6,GPIOB,GPIO_Pin_3,30,ID_PDC},		//KEY7 Front Radar: 
-											{GPIOC,GPIO_Pin_14,7,GPIOB,GPIO_Pin_5,21,ID_PDC},		//KEY8 BSA Switch			LED: BSA LED
+											{GPIOC,GPIO_Pin_14,7,GPIOB,GPIO_Pin_5,SP_BIT_BSA_SYS_STS,ID_PDC},		//KEY8 BSA Switch			LED: BSA LED, 由PDC中BSASysSts即Bit22-23控制
 											{GPIOC,GPIO_Pin_13,20,GPIOB,GPIO_Pin_7,1,ID_HUD},		//KEY9 HUD Skey: 		LED: HUD SKey LED
 											{GPIOB,GPIO_Pin_6,21,0,0},		//KEY10 HUD Up
 											{GPIOB,GPIO_Pin_4,22,0,0},		//KEY11 HUD Down
-											{GPIOA,GPIO_Pin_15,SP_KEY_STARTSTOP,GPIOB,GPIO_Pin_9,SP_BIT_EMS_STARTSTOP,ID_EMS},		//KEY12 StartStopSwith (A:NC)	LED: StartStop LED (A:NC)
+											//{GPIOA,GPIO_Pin_15,SP_KEY_STARTSTOP,GPIOB,GPIO_Pin_9,SP_BIT_EMS_STARTSTOP,ID_EMS},		//KEY12 StartStopSwith (A:NC)	LED: StartStop LED (A:NC)
 											};
 #endif
 
@@ -33,11 +37,27 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOB,GPIO_Pin_0,16,	GPIOB,GPIO_Pin_2,15,ID_ESP},	//KEY5 HDC 			LED: HDC LED ??????
 											{GPIOB,GPIO_Pin_1,26,0,0},		//KEY6 DVD NAVI	
 											{GPIOC,GPIO_Pin_15,6,GPIOB,GPIO_Pin_3,30,ID_PDC},		//KEY7 Front Radar: 
-											{GPIOC,GPIO_Pin_14,7,GPIOB,GPIO_Pin_5,21,ID_PDC},		//KEY8 BSA Switch			LED: BSA LED
+											{GPIOC,GPIO_Pin_14,7,GPIOB,GPIO_Pin_5,SP_BIT_BSA_SYS_STS,ID_PDC},		//KEY8 BSA Switch			LED: BSA LED
 											{GPIOC,GPIO_Pin_13,20,GPIOB,GPIO_Pin_7,1,ID_HUD},		//KEY9 HUD Skey: 		LED: HUD SKey LED
 											{GPIOB,GPIO_Pin_6,21,0,0},		//KEY10 HUD Up
 											{GPIOB,GPIO_Pin_4,22,0,0},		//KEY11 HUD Down
-											//{GPIOB,GPIO_Pin_6,9,0,0},		//KEY12 StartStopSwith (A:NC)	LED: StartStop LED (A:NC)
+											{GPIOA,GPIO_Pin_15,SP_KEY_STARTSTOP,GPIOB,GPIO_Pin_9,SP_BIT_EMS_STARTSTOP,ID_EMS},		//KEY12 StartStopSwith (A:NC)	LED: StartStop LED (A:NC)
+											};
+#endif
+#ifdef BOARD_099B
+KeyIO_t indKeyIO[IND_KEY_NUM] = {
+											{GPIOA,GPIO_Pin_4,18,0,0,0,0},		//KEY1 DVD_TEL
+											{GPIOA,GPIO_Pin_5,19, GPIOB,GPIO_Pin_11,6,ID_AVM},	//KEY2 DVD MODE；LED: LDWS Skey LED
+											{GPIOA,GPIO_Pin_6,17, 0,0,0,0},		//KEY3 DVD MENU; 
+											{GPIOA,GPIO_Pin_7,15, GPIOB,GPIO_Pin_10,2,ID_ESP},	//KEY4 ESC Off  LED: ESC LED
+											{GPIOB,GPIO_Pin_0,16,	GPIOB,GPIO_Pin_2,15,ID_ESP},	//KEY5 HDC 			LED: HDC LED ??????
+											{GPIOB,GPIO_Pin_1,26,0,0},		//KEY6 DVD NAVI	
+											{GPIOC,GPIO_Pin_15,6,GPIOB,GPIO_Pin_3,30,ID_PDC},		//KEY7 Front Radar: 
+											{GPIOC,GPIO_Pin_14,7,GPIOB,GPIO_Pin_5,SP_BIT_BSA_SYS_STS,ID_PDC},		//KEY8 DVD SET			LED: BSA LED
+											{GPIOC,GPIO_Pin_13,20,GPIOB,GPIO_Pin_7,1,ID_HUD},		//KEY9 DVD Radio: 		LED: HUD SKey LED
+											{GPIOB,GPIO_Pin_6,21,0,0},		//KEY10 DVD Seekup
+											{GPIOB,GPIO_Pin_4,22,0,0},		//KEY11 DVD Seekdown
+											//{GPIOB,GPIO_Pin_6,9,0,0},		//KEY12 NC	LED: StartStop LED (A:NC)
 											};
 #endif
 
@@ -87,23 +107,6 @@ u8 KeyScan(void)
 	u8 trig=0;
 //	static u8 indKeyStatePrePre[4]={2,2,2,2};
   u8 i;
-/*
-	//读取当前的状态
-  for(i=0;i<IND_KEY_NUM;i++)
-	{
-		u8 tempVal=0;
-		tempVal = GPIO_ReadInputDataBit(indKeyIO[i].GPIO_Port,indKeyIO[i].GPIO_Pin);
-		if(indKeyStatePre[i] == tempVal )  //两次读值一样，即过滤掉机械抖动
-		{
-			if(tempVal == 0)	//Press down
-			  keysBuff |= ((u16)1)<<i;
-			else							//Release 
-				keysBuff &= ~(((u16)1)<<i);
-		}
-		indKeyStatePre[i] = tempVal;
-//		indKeyStatePrePre[i] = indKeyStatePre[i];
-	}
-*/
 	for(i=0;i<IND_KEY_NUM;i++)
 	{
 		u8 tempVal=0;
@@ -205,12 +208,70 @@ void LEDUpdate(u8 *datRec, u32 id)
 					else
 						GPIO_SetBits(indKeyIO[i].LED_Port, indKeyIO[i].LED_Pin);
 				}
+				if(indKeyIO[i].rbitn == SP_BIT_BSA_SYS_STS){
+					//取bit22-23,
+					u8 val=datRec[Bn] & ((u8)0x3<<bn);
+					val = val >> bn;
+					LEDSMSet(indKeyIO[i].LED_Port,indKeyIO[i].LED_Pin,val);
+				}
 			}
 		}
 	}
 }
-
-
+//todo: 若在c++，可封装成class
+static GPIO_TypeDef* GPIO_sm;
+static uint16_t	PIN_sm;
+static u8 st=0;	
+void LEDSMSet(GPIO_TypeDef* GPIOx,uint16_t PINx,u8 val)
+{
+	GPIO_sm=GPIOx;
+	PIN_sm=PINx;
+	if(val==0){
+		GPIO_ResetBits(GPIO_sm, PIN_sm);
+		st=0;
+	}
+	else if(val==1){
+		GPIO_SetBits(GPIO_sm, PIN_sm);
+		st=0;
+	}
+	else if(val==2){
+		st=1;
+	}
+}
+//每10ms调用一次
+void LEDFlashSM()
+{
+	static u8 tcnt=0;
+	switch(st){
+		case 0:
+			//do nothing
+			break;
+		case 1:
+			GPIO_SetBits(GPIO_sm, PIN_sm);
+			tcnt=0;
+			st=2;
+			break;
+		case 2:
+			//count 330ms
+			tcnt++;
+			if(tcnt>=33){
+				GPIO_ResetBits(GPIO_sm, PIN_sm);
+				tcnt=0;
+				st=3;
+			}
+			break;
+		case 3:
+			//count 670ms
+			tcnt++;
+			if(tcnt>=66){
+				//take 10 more ms to next step 
+				tcnt=0;
+				st=1;
+			}
+			break;
+	}
+	
+}
 
 
 void EncoderInit(void)
