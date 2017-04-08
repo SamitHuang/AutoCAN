@@ -74,8 +74,10 @@ static u8 uartCnt;
 
 bool fPowerOn;
 u8 sendWakeWithoutResp;
-bool inWakeupDeadTime;
+bool inWakeupDeadTime,isFailWakeup;
 u16 wdt;
+//记录系统时间,以100ms为间隔
+u32 sysTime=0;
 
 
 void DeepHaltPre()
@@ -153,6 +155,73 @@ void SystemRecover()
   
  // DelaySoftMs(100);
   enableInterrupts(); 
+}
+
+u8 stWakeup=0;          //状态
+//按键触发唤醒sm , 调用周期为10ms
+bool TrigSendWakeupSM()
+{
+  
+  if(stWakeup==0)
+  {
+    stWakeup=1;
+    return TRUE;
+  }else{
+    //若已经处于唤醒流程，再按按键无效
+    return FALSE;
+  }
+}
+//唤醒时序的状态机
+void SendWakeupSM()
+{
+ 
+  static u8 t1=0,t2=0;          //等待时间
+  static u8 sendCnt=0;     //连续发送的次数
+  switch(stWakeup){
+  case 0: //idle
+    //do nothing
+    break;
+  case 1:
+     //发低电平(>150us)，唤醒
+    LIN_WakeMasterUp(); //uart 发00，是堵塞式的
+    sendCnt++;
+    t1=0;
+    stWakeup=2;
+    break;
+  case 2: 
+    //等待250ms (150ms-250)
+    t1++;
+    if(t1>=24){
+      t1=0;
+      //判断主机是否已唤醒
+      if(chkSleepCnt>20){
+        //仍未醒
+        if(sendCnt>=3){
+          //已经发了三次，进入1.5s的等待
+          stWakeup=3;
+          sendCnt=0;
+          t2=0;
+        }else{
+          //再次发送
+          stWakeup=1;
+        }
+      }else{
+        //已唤醒，进入idle
+        stWakeup=0;
+      }
+    }
+    break;
+  case 3:
+    //已经发了三次，等待1.5s
+    t2++;
+    if(t2>150){
+      t2=0;
+      //1.5s后，允许重新触发唤醒
+      stWakeup=0;
+    }
+    break;
+   
+  }
 }
 
 void main(void)
@@ -251,50 +320,20 @@ void main(void)
         isLeftSelectTrigged = indKeysValue & (0x01 << KEY_SELECT_LEFT);
         isRightSelectTrigged = indKeysValue & (0x01 << KEY_SELECT_RIGHT);
         
-        
-        if(chkSleepCnt>=20)//chkSleepCnt未被及时清零，认为主机休眠了
+        //主机处于休眠状态，处理按键唤醒和唤醒时序流程
+        if(chkSleepCnt>=20)
         //if(isMasterSleep)
         {
-          
           if(isBCMLockTrigged | isBCMUnlockTrigged | isLeftSelectTrigged | isRightSelectTrigged )
           {
-            //keysReqMasterWakeUp=1;
+            //keysReqMasterWakeUp=;
             isBCMLockTrigged = FALSE;isBCMUnlockTrigged=FALSE;isLeftSelectTrigged=FALSE;isRightSelectTrigged=FALSE;
-            //ledSleepCnt=0;
-            if(!inWakeupDeadTime){
-              LIN_WakeMasterUp();
-              sendWakeWithoutResp++;
-            }
-            if(sendWakeWithoutResp>=3){
-              inWakeupDeadTime=TRUE;
-              wdt=0;
-            }    
+            TrigSendWakeupSM();   
             //wakeUpGapCnt=150;
           }
-          /*
-          //进行唤醒状态机
-          if(keysReqMasterWakeUp)
-          {
-           
-            
-            if(++wakeUpGapCnt>=150)       
-            {
-              wakeUpGapCnt=0;
-              LIN_WakeMasterUp();
-              keysReqMasterWakeUp = 0;
-            }
-             
-          }*/
-          
         } 
-        //定时1.5s
-        if(inWakeupDeadTime==TRUE){
-          wdt++;
-          if(wdt>=150){
-            wdt=0;
-            inWakeupDeadTime=FALSE;
-          }
-        }
+        //唤醒时序状态机
+        SendWakeupSM();
     }
    
     //实时处理LIN主机信号
