@@ -59,8 +59,6 @@ int main(void)
 //	TxMessage.Data[7] = 0xA7;
 		
 	tPre = millis();
-	
-//	LEDSMSet(GPIOA,GPIO_Pin_4,2);
 	while(1)
 	{
 		if( millis() >= tPre + 10)
@@ -73,6 +71,7 @@ int main(void)
 			KeyScan();
 			//控制BSA指示灯的闪烁
 			LEDFlashSM();
+			LEDRadarFlashSM();
 			if(++tDiv >=2)
 			{
 				tDiv=0;

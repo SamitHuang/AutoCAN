@@ -4,9 +4,10 @@
 //#define BOARD_099B 1
 
 
-//非一位控制的开关量. Todo: 写得更具有通用性。{ID_ESP,ID_AVM,ID_PDC,ID_HUD,ID_NVS}
+//SPecial Bit 非一位控制的开关量. Todo: 写得更具有通用性。{ID_ESP,ID_AVM,ID_PDC,ID_HUD,ID_NVS}
 #define SP_BIT_EMS_STARTSTOP 50
 #define SP_BIT_BSA_SYS_STS 22
+#define SP_BIT_FRONT_RADAR 30
 
 
 
@@ -19,7 +20,7 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOA,GPIO_Pin_7,15, GPIOB,GPIO_Pin_10,2,ID_ESP},	//KEY4 ESC Off  LED: ESC LED
 											{GPIOB,GPIO_Pin_0,16,	GPIOB,GPIO_Pin_2,15,ID_ESP},	//KEY5 HDC 			LED: HDC LED ??????
 											{GPIOB,GPIO_Pin_1,26,0,0},		//KEY6 DVD NAVI	
-											{GPIOC,GPIO_Pin_15,6,GPIOB,GPIO_Pin_3,30,ID_PDC},		//KEY7 Front Radar: 
+											{GPIOC,GPIO_Pin_15,6,GPIOB,GPIO_Pin_3,SP_BIT_FRONT_RADAR,ID_PDC},		//KEY7 Front Radar: 
 											{GPIOC,GPIO_Pin_14,7,GPIOB,GPIO_Pin_5,SP_BIT_BSA_SYS_STS,ID_PDC},		//KEY8 BSA Switch			LED: BSA LED, 由PDC中BSASysSts即Bit22-23控制
 											{GPIOC,GPIO_Pin_13,20,GPIOB,GPIO_Pin_7,1,ID_HUD},		//KEY9 HUD Skey: 		LED: HUD SKey LED
 											{GPIOB,GPIO_Pin_6,21,0,0},		//KEY10 HUD Up
@@ -36,7 +37,7 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOA,GPIO_Pin_7,15, GPIOB,GPIO_Pin_10,2,ID_ESP},	//KEY4 ESC Off  LED: ESC LED
 											{GPIOB,GPIO_Pin_0,16,	GPIOB,GPIO_Pin_2,15,ID_ESP},	//KEY5 HDC 			LED: HDC LED ??????
 											{GPIOB,GPIO_Pin_1,26,0,0},		//KEY6 DVD NAVI	
-											{GPIOC,GPIO_Pin_15,6,GPIOB,GPIO_Pin_3,30,ID_PDC},		//KEY7 Front Radar: 
+											{GPIOC,GPIO_Pin_15,6,GPIOB,GPIO_Pin_3,SP_BIT_FRONT_RADAR,ID_PDC},		//KEY7 Front Radar: 
 											{GPIOC,GPIO_Pin_14,7,GPIOB,GPIO_Pin_5,SP_BIT_BSA_SYS_STS,ID_PDC},		//KEY8 BSA Switch			LED: BSA LED
 											{GPIOC,GPIO_Pin_13,20,GPIOB,GPIO_Pin_7,1,ID_HUD},		//KEY9 HUD Skey: 		LED: HUD SKey LED
 											{GPIOB,GPIO_Pin_6,21,0,0},		//KEY10 HUD Up
@@ -52,7 +53,7 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOA,GPIO_Pin_7,15, GPIOB,GPIO_Pin_10,2,ID_ESP},	//KEY4 ESC Off  LED: ESC LED
 											{GPIOB,GPIO_Pin_0,16,	GPIOB,GPIO_Pin_2,15,ID_ESP},	//KEY5 HDC 			LED: HDC LED ??????
 											{GPIOB,GPIO_Pin_1,26,0,0},		//KEY6 DVD NAVI	
-											{GPIOC,GPIO_Pin_15,6,GPIOB,GPIO_Pin_3,30,ID_PDC},		//KEY7 Front Radar: 
+											{GPIOC,GPIO_Pin_15,6,GPIOB,GPIO_Pin_3,SP_BIT_FRONT_RADAR,ID_PDC},		//KEY7 Front Radar: 
 											{GPIOC,GPIO_Pin_14,7,GPIOB,GPIO_Pin_5,SP_BIT_BSA_SYS_STS,ID_PDC},		//KEY8 DVD SET			LED: BSA LED
 											{GPIOC,GPIO_Pin_13,20,GPIOB,GPIO_Pin_7,1,ID_HUD},		//KEY9 DVD Radio: 		LED: HUD SKey LED
 											{GPIOB,GPIO_Pin_6,21,0,0},		//KEY10 DVD Seekup
@@ -214,6 +215,12 @@ void LEDUpdate(u8 *datRec, u32 id)
 					val = val >> bn;
 					LEDSMSet(indKeyIO[i].LED_Port,indKeyIO[i].LED_Pin,val);
 				}
+				if(indKeyIO[i].rbitn == SP_BIT_FRONT_RADAR){
+				//取bit30-31
+					u8 val=datRec[Bn] & ((u8)0x3<<bn);
+					val = val >> bn;
+					LEDRadarSMSet(indKeyIO[i].LED_Port,indKeyIO[i].LED_Pin,val);
+				}
 			}
 		}
 	}
@@ -227,11 +234,11 @@ void LEDSMSet(GPIO_TypeDef* GPIOx,uint16_t PINx,u8 val)
 	GPIO_sm=GPIOx;
 	PIN_sm=PINx;
 	if(val==0){
-		GPIO_ResetBits(GPIO_sm, PIN_sm);
+		GPIO_ResetBits(GPIOx, PINx);
 		st=0;
 	}
 	else if(val==1){
-		GPIO_SetBits(GPIO_sm, PIN_sm);
+		GPIO_SetBits(GPIOx, PINx);
 		st=0;
 	}
 	else if(val==2){
@@ -267,6 +274,60 @@ void LEDFlashSM()
 				//take 10 more ms to next step 
 				tcnt=0;
 				st=1;
+			}
+			break;
+	}
+	
+}
+
+static GPIO_TypeDef* GPIO_smr;
+static uint16_t	PIN_smr;
+static u8 str=0;	
+void LEDRadarSMSet(GPIO_TypeDef* GPIOx,uint16_t PINx,u8 val)
+{
+	GPIO_smr=GPIOx;
+	PIN_smr=PINx;
+	if(val==0){
+		GPIO_ResetBits(GPIOx, PINx);
+		str=0;
+	}
+	else if(val==1){
+		GPIO_SetBits(GPIOx, PINx);
+		str=0;
+	}
+	else if(val==2){
+		str=1;
+	}
+}
+//每10ms调用一次
+void LEDRadarFlashSM()
+{
+	static u8 tcnt=0;
+	switch(str){
+		case 0:
+			//do nothing
+			break;
+		case 1:
+			GPIO_SetBits(GPIO_smr, PIN_smr);
+			tcnt=0;
+			str=2;
+			break;
+		case 2:
+			//count 330ms
+			tcnt++;
+			if(tcnt>=33){
+				GPIO_ResetBits(GPIO_smr, PIN_smr);
+				tcnt=0;
+				str=3;
+			}
+			break;
+		case 3:
+			//count 670ms
+			tcnt++;
+			if(tcnt>=66){
+				//take 10 more ms to next step 
+				tcnt=0;
+				str=1;
 			}
 			break;
 	}

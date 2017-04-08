@@ -39,6 +39,8 @@ void EncoderInit(void);
 char EncoderRead(void);
 void LEDSMSet(GPIO_TypeDef* GPIOx,uint16_t PINx,u8 val);
 void LEDFlashSM();
+void LEDRadarSMSet(GPIO_TypeDef* GPIOx,uint16_t PINx,u8 val);
+void LEDRadarFlashSM();
 
 //°´¼ü»º´æ
 typedef union key075
