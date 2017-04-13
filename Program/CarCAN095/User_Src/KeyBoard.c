@@ -7,13 +7,15 @@
 //非一位控制的开关量. Todo: 写得更具有通用性。{ID_ESP,ID_AVM,ID_PDC,ID_HUD,ID_NVS}
 
 #define SP_BIT_EMS_STARTSTOP 50
+//#define SP_BIT_BSA_SYS_STS 22
+#define SP_BIT_FRONT_RADAR 30
 
 
 #ifdef BOARD_095
 KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOA,GPIO_Pin_9,16,GPIOA,GPIO_Pin_8,15,ID_ESP},		//KEY1 HDC. 	LED HDC
 											{GPIOB,GPIO_Pin_13,15, GPIOB,GPIO_Pin_12,2,ID_ESP},		//KEY2 ESC; ESC LED; --> TOBE Fixed!!
-											{GPIOB,GPIO_Pin_10,6, GPIOB,GPIO_Pin_11,30,ID_PDC},		//KEY3 Front radar
+											{GPIOB,GPIO_Pin_10,6, GPIOB,GPIO_Pin_11,SP_BIT_FRONT_RADAR,ID_PDC},		//KEY3 Front radar
 											{GPIOB,GPIO_Pin_14,31, 0,0},	//KEY4 DVD MUTE
 											{GPIOB,GPIO_Pin_0,SP_KEY_STARTSTOP,GPIOB,GPIO_Pin_1,SP_BIT_EMS_STARTSTOP,ID_EMS},	//*KEY5 StartStopSwtich (B C:DVD MENU); LED5, StartStop LED (B C:NC)
 											{GPIOB,GPIO_Pin_15,32,0,0},		//KEY6 TEL		
@@ -31,7 +33,7 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOA,GPIO_Pin_9,16,GPIOA,GPIO_Pin_8,15,ID_ESP},		//KEY1 HDC. 
 											{GPIOB,GPIO_Pin_13,15, GPIOB,GPIO_Pin_12,2,ID_ESP},		//KEY2 ESC; ESC LED; --> TOBE Fixed!!
-											{GPIOB,GPIO_Pin_10,6, GPIOB,GPIO_Pin_11,30,ID_PDC},		//KEY3 Front radar
+											{GPIOB,GPIO_Pin_10,6, GPIOB,GPIO_Pin_11,SP_BIT_FRONT_RADAR,ID_PDC},		//KEY3 Front radar
 											{GPIOB,GPIO_Pin_14,31, 0,0},	//KEY4 DVD MUTE
 											{GPIOB,GPIO_Pin_0,SP_KEY_STARTSTOP,GPIOB,GPIO_Pin_1,SP_BIT_EMS_STARTSTOP,ID_EMS},	//*KEY5 StartStopSwtich (B C:DVD MENU); LED5, StartStop LED (B C:NC)
 											{GPIOB,GPIO_Pin_15,32,0,0},		//KEY6 TEL		
@@ -49,7 +51,7 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 KeyIO_t indKeyIO[IND_KEY_NUM] ={
 											{GPIOA,GPIO_Pin_9,16,GPIOA,GPIO_Pin_8,15,ID_ESP},		//KEY1 HDC. 
 											{GPIOB,GPIO_Pin_13,15, GPIOB,GPIO_Pin_12,2,ID_ESP},		//KEY2 ESC; ESC LED; --> TOBE Fixed!!
-											{GPIOB,GPIO_Pin_10,6, GPIOB,GPIO_Pin_11,30,ID_PDC},		//KEY3 Front radar
+											{GPIOB,GPIO_Pin_10,6, GPIOB,GPIO_Pin_11,SP_BIT_FRONT_RADAR,ID_PDC},		//KEY3 Front radar
 											{GPIOB,GPIO_Pin_14,31, 0,0},	//KEY4 DVD MUTE
 											{GPIOB,GPIO_Pin_0,24,0,0,0,0},	//*KEY5 StartStopSwtich (B C:DVD MENU); LED5, StartStop LED (B C:NC)
 											{GPIOB,GPIO_Pin_15,32,0,0},		//KEY6 TEL		
@@ -67,7 +69,7 @@ KeyIO_t indKeyIO[IND_KEY_NUM] ={
 KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOA,GPIO_Pin_9,16,GPIOA,GPIO_Pin_8,15,ID_ESP},		//KEY1 HDC. 
 											{GPIOB,GPIO_Pin_13,15, GPIOB,GPIO_Pin_12,2,ID_ESP},		//KEY2 ESC; ESC LED; --> TOBE Fixed!!
-											{GPIOB,GPIO_Pin_10,6, GPIOB,GPIO_Pin_11,30,ID_PDC},		//KEY3 Front radar
+											{GPIOB,GPIO_Pin_10,6, GPIOB,GPIO_Pin_11,SP_BIT_FRONT_RADAR,ID_PDC},		//KEY3 Front radar
 											{GPIOB,GPIO_Pin_14,31, 0,0},	//KEY4 DVD MUTE
 											{GPIOB,GPIO_Pin_0,24,0,0,0,0},	//*KEY5 StartStopSwtich (B C:DVD MENU); LED5, StartStop LED (B C:NC)
 											{GPIOB,GPIO_Pin_15,32,0,0},		//KEY6 TEL		
@@ -247,11 +249,69 @@ void LEDUpdate(u8 *datRec, u32 id)
 					else
 						GPIO_SetBits(indKeyIO[i].LED_Port, indKeyIO[i].LED_Pin);
 				}
+				if(indKeyIO[i].rbitn == SP_BIT_FRONT_RADAR){
+				//取bit30-31
+					u8 val=datRec[Bn] & ((u8)0x3<<bn);
+					val = val >> bn;
+					LEDRadarSMSet(indKeyIO[i].LED_Port,indKeyIO[i].LED_Pin,val);
+				}
 			}
 		}
 	}
 }
-
+static GPIO_TypeDef* GPIO_smr;
+static uint16_t	PIN_smr;
+static u8 str=0;	
+void LEDRadarSMSet(GPIO_TypeDef* GPIOx,uint16_t PINx,u8 val)
+{
+	GPIO_smr=GPIOx;
+	PIN_smr=PINx;
+	if(val==0){
+		GPIO_ResetBits(GPIOx, PINx);
+		str=0;
+	}
+	else if(val==1){
+		GPIO_SetBits(GPIOx, PINx);
+		str=0;
+	}
+	else if(val==2){
+		str=1;
+	}
+}
+//每10ms调用一次
+void LEDRadarFlashSM()
+{
+	static u8 tcnt=0;
+	switch(str){
+		case 0:
+			//do nothing
+			break;
+		case 1:
+			GPIO_SetBits(GPIO_smr, PIN_smr);
+			tcnt=0;
+			str=2;
+			break;
+		case 2:
+			//count 330ms
+			tcnt++;
+			if(tcnt>=33){
+				GPIO_ResetBits(GPIO_smr, PIN_smr);
+				tcnt=0;
+				str=3;
+			}
+			break;
+		case 3:
+			//count 670ms
+			tcnt++;
+			if(tcnt>=66){
+				//take 10 more ms to next step 
+				tcnt=0;
+				str=1;
+			}
+			break;
+	}
+	
+}
 
 
 

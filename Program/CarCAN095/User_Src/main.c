@@ -79,6 +79,7 @@ int main(void)
 			tPre = millis();
 			//keysBuffPre = keysBuff;
 			KeyScan();
+			LEDRadarFlashSM();
 			if(++tDiv >=2)
 			{
 				tDiv=0;

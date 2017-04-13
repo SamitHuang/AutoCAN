@@ -11,10 +11,10 @@ typedef enum
 
 //#define BOARD_099 1
 //#define BOARD_099A 1
-//#define BOARD_099B 1
+#define BOARD_099B 1
 //#define BOARD_099C 1
 //#define BOARD_099D 1
-#define BOARD_099E 1
+//#define BOARD_099E 1
 
 #ifdef BOARD_099
 #define IND_KEY_NUM 11

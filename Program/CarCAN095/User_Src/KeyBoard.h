@@ -10,14 +10,15 @@ typedef enum
 }keyName_tt;
 
 //#define BOARD_095 1
-//#define BOARD_095A 1
-#define BOARD_095B 1
+#define BOARD_095A 1
+//#define BOARD_095B 1
 //#define BOARD_095C 1
 
 
 #define IND_KEY_NUM 14
 
 #define SP_KEY_STARTSTOP  9
+
 
 typedef struct KeyIO_tt
 {
@@ -35,6 +36,10 @@ u8 KeyScan(void);
 void LEDUpdate(u8 *datRec, u32 id);
 void EncoderInit(void);
 char EncoderRead(void);
+void LEDSMSet(GPIO_TypeDef* GPIOx,uint16_t PINx,u8 val);
+void LEDFlashSM();
+void LEDRadarSMSet(GPIO_TypeDef* GPIOx,uint16_t PINx,u8 val);
+void LEDRadarFlashSM();
 
 //°´¼ü»º´æ
 typedef union key075

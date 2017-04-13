@@ -1,15 +1,19 @@
 #include "KeyBoard.h" 
 
 //主要配置。
-//#define BOARD_091 1
+#define BOARD_091 1
 //#define BOARD_091A 1
-#define BOARD_091B 1
+//#define BOARD_091B 1
+//#define BOARD_091C 1
+
+#define SP_BIT_BSA_SYS_STS 22
+#define SP_BIT_FRONT_RADAR 30
 
 #ifdef BOARD_091
 KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOA,GPIO_Pin_9,16,GPIOA,GPIO_Pin_8,15,ID_ESP},		//KEY1 HDC. 
 											{GPIOB,GPIO_Pin_13,15, GPIOB,GPIO_Pin_12,2,ID_ESP},		//KEY2 ESC； ESC LED; --> TOBE Fixed!!
-											{GPIOB,GPIO_Pin_10,6, GPIOB,GPIO_Pin_11,30,ID_PDC},		//KEY3 Front radar
+											{GPIOB,GPIO_Pin_10,6, GPIOB,GPIO_Pin_11,SP_BIT_FRONT_RADAR,ID_PDC},		//KEY3 Front radar
 											{GPIOB,GPIO_Pin_14,31, 0,0},	//KEY4 MUTE
 											{GPIOB,GPIO_Pin_0,24,0,0},	//KEY5 MENU (B:BSA_SW); NC
 											{GPIOB,GPIO_Pin_15,32,0,0},		//KEY6 TEL		
@@ -27,9 +31,9 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOA,GPIO_Pin_9,16,GPIOA,GPIO_Pin_8,15,ID_ESP},		//KEY1 HDC 
 											{GPIOB,GPIO_Pin_13,15, GPIOB,GPIO_Pin_12,2,ID_ESP},		//KEY2 ESC
-											{GPIOB,GPIO_Pin_10,6, GPIOB,GPIO_Pin_11,30,ID_PDC},		//KEY3 Front radar
+											{GPIOB,GPIO_Pin_10,6, GPIOB,GPIO_Pin_11,SP_BIT_FRONT_RADAR,ID_PDC},		//KEY3 Front radar
 											{GPIOB,GPIO_Pin_14,31, 0,0},	//KEY4 MUTE
-											{GPIOB,GPIO_Pin_0,24,GPIOB,GPIO_Pin_1,21,ID_PDC},	//KEY5 MENU (B:BSA_SW); BSA_LED
+											{GPIOB,GPIO_Pin_0,24,GPIOB,GPIO_Pin_1,SP_BIT_BSA_SYS_STS,ID_PDC},	//KEY5 MENU (B:BSA_SW); BSA_LED
 											{GPIOB,GPIO_Pin_15,32,0,0},		//KEY6 TEL		
 											{GPIOA,GPIO_Pin_4,26,0,0},		//KEY7 NAV_SW
 											{GPIOA,GPIO_Pin_15,33,0,0},		//KEY8 RADIO (B:AVM key)
@@ -45,9 +49,9 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOA,GPIO_Pin_9,16,GPIOA,GPIO_Pin_8,15,ID_ESP},		//KEY1 HDC 
 											{GPIOB,GPIO_Pin_13,15, GPIOB,GPIO_Pin_12,2,ID_ESP},		//KEY2 ESC
-											{GPIOB,GPIO_Pin_10,6, GPIOB,GPIO_Pin_11,30,ID_PDC},		//KEY3 Front radar
+											{GPIOB,GPIO_Pin_10,6, GPIOB,GPIO_Pin_11,SP_BIT_FRONT_RADAR,ID_PDC},		//KEY3 Front radar
 											{GPIOB,GPIO_Pin_14,31, 0,0},	//KEY4 MUTE
-											{GPIOB,GPIO_Pin_0,7,GPIOB,GPIO_Pin_1,21,ID_PDC},	//KEY5 MENU (B:BSA_SW); BSA_LED
+											{GPIOB,GPIO_Pin_0,7,GPIOB,GPIO_Pin_1,SP_BIT_BSA_SYS_STS,ID_PDC},	//KEY5 MENU (B:BSA_SW); BSA_LED
 											{GPIOB,GPIO_Pin_15,32,0,0},		//KEY6 TEL		
 											{GPIOA,GPIO_Pin_4,26,0,0},		//KEY7 NAV_SW
 											{GPIOA,GPIO_Pin_15,18,0,0},		//KEY8 RADIO (B:AVM key)
@@ -56,6 +60,24 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOB,GPIO_Pin_8,19,GPIOC,GPIO_Pin_14,6,ID_AVM},		//KEY11 BACK (B:LDWS) ; LWDS_LED
 											{GPIOB,GPIO_Pin_6,21,0,0},		//KEY12 HUD_UP	(91:SEEK+)
 											{GPIOB,GPIO_Pin_7,22,0,0},		//KEY13 HUD_DONW (91:SEEK-)
+											{GPIOA,GPIO_Pin_5,23,0,0},		//KEY14 KEY ON Power
+											};
+#endif
+#ifdef BOARD_091C
+KeyIO_t indKeyIO[IND_KEY_NUM] = {
+											{GPIOA,GPIO_Pin_9,16,GPIOA,GPIO_Pin_8,15,ID_ESP},		//KEY1 HDC. 
+											{GPIOB,GPIO_Pin_13,15, GPIOB,GPIO_Pin_12,2,ID_ESP},		//KEY2 ESC； ESC LED; --> TOBE Fixed!!
+											{GPIOB,GPIO_Pin_10,6, GPIOB,GPIO_Pin_11,SP_BIT_FRONT_RADAR,ID_PDC},		//KEY3 Front radar
+											{GPIOB,GPIO_Pin_14,31, 0,0},	//KEY4 MUTE
+											{GPIOB,GPIO_Pin_0,6,GPIOB,GPIO_Pin_1,SP_BIT_BSA_SYS_STS,ID_PDC},	//KEY5 MENU (B C:BSA_SW);  BSA LED
+											{GPIOB,GPIO_Pin_15,32,0,0},		//KEY6 TEL		
+											{GPIOA,GPIO_Pin_4,18,0,0},		//KEY7 NAV_SW	C:AVM Skey
+											{GPIOA,GPIO_Pin_15,33,0,0},		//KEY8 C:RADIO (B:AVM key) 
+											{GPIOB,GPIO_Pin_9,25,0,0},		//KEY9 C:DVD MODE (B:NVS) ; LED NC (NVS)
+											{GPIOB,GPIO_Pin_4,30,0,0},		//KEY10 C:DVD BACK (91:SET_SW); NC
+											{GPIOB,GPIO_Pin_8,19,GPIOC,GPIO_Pin_14,6,ID_AVM},		//KEY11 C: LDWS Skey (B:LDWS)
+											{GPIOB,GPIO_Pin_6,34,0,0},		//KEY12 C: DVD_Seekup	(91:SEEK+)
+											{GPIOB,GPIO_Pin_7,35,0,0},		//KEY13 C: DVD Seek down  (91:SEEK-)
 											{GPIOA,GPIO_Pin_5,23,0,0},		//KEY14 KEY ON Power
 											};
 #endif
@@ -178,12 +200,132 @@ void LEDUpdate(u8 *datRec, u32 id)
 					GPIO_ResetBits(indKeyIO[i].LED_Port, indKeyIO[i].LED_Pin);
 				else
 					GPIO_SetBits(indKeyIO[i].LED_Port, indKeyIO[i].LED_Pin);
+				
+				if(indKeyIO[i].rbitn == SP_BIT_BSA_SYS_STS){
+					//取bit22-23,
+					u8 val=datRec[Bn] & ((u8)0x3<<bn);
+					val = val >> bn;
+					LEDSMSet(indKeyIO[i].LED_Port,indKeyIO[i].LED_Pin,val);
+				}
+				if(indKeyIO[i].rbitn == SP_BIT_FRONT_RADAR){
+				//取bit30-31
+					u8 val=datRec[Bn] & ((u8)0x3<<bn);
+					val = val >> bn;
+					LEDRadarSMSet(indKeyIO[i].LED_Port,indKeyIO[i].LED_Pin,val);
+				}
 			}
 		}
 	}
 }
 
+//todo: 若在c++，可封装成class
+static GPIO_TypeDef* GPIO_sm;
+static uint16_t	PIN_sm;
+static u8 st=0;	
+void LEDSMSet(GPIO_TypeDef* GPIOx,uint16_t PINx,u8 val)
+{
+	GPIO_sm=GPIOx;
+	PIN_sm=PINx;
+	if(val==0){
+		GPIO_ResetBits(GPIOx, PINx);
+		st=0;
+	}
+	else if(val==1){
+		GPIO_SetBits(GPIOx, PINx);
+		st=0;
+	}
+	else if(val==2){
+		st=1;
+	}
+}
+//每10ms调用一次
+void LEDFlashSM()
+{
+	static u8 tcnt=0;
+	switch(st){
+		case 0:
+			//do nothing
+			break;
+		case 1:
+			GPIO_SetBits(GPIO_sm, PIN_sm);
+			tcnt=0;
+			st=2;
+			break;
+		case 2:
+			//count 330ms
+			tcnt++;
+			if(tcnt>=33){
+				GPIO_ResetBits(GPIO_sm, PIN_sm);
+				tcnt=0;
+				st=3;
+			}
+			break;
+		case 3:
+			//count 670ms
+			tcnt++;
+			if(tcnt>=66){
+				//take 10 more ms to next step 
+				tcnt=0;
+				st=1;
+			}
+			break;
+	}
+	
+}
 
+static GPIO_TypeDef* GPIO_smr;
+static uint16_t	PIN_smr;
+static u8 str=0;	
+void LEDRadarSMSet(GPIO_TypeDef* GPIOx,uint16_t PINx,u8 val)
+{
+	GPIO_smr=GPIOx;
+	PIN_smr=PINx;
+	if(val==0){
+		GPIO_ResetBits(GPIOx, PINx);
+		str=0;
+	}
+	else if(val==1){
+		GPIO_SetBits(GPIOx, PINx);
+		str=0;
+	}
+	else if(val==2){
+		str=1;
+	}
+}
+//每10ms调用一次
+void LEDRadarFlashSM()
+{
+	static u8 tcnt=0;
+	switch(str){
+		case 0:
+			//do nothing
+			break;
+		case 1:
+			GPIO_SetBits(GPIO_smr, PIN_smr);
+			tcnt=0;
+			str=2;
+			break;
+		case 2:
+			//count 330ms
+			tcnt++;
+			if(tcnt>=33){
+				GPIO_ResetBits(GPIO_smr, PIN_smr);
+				tcnt=0;
+				str=3;
+			}
+			break;
+		case 3:
+			//count 670ms
+			tcnt++;
+			if(tcnt>=66){
+				//take 10 more ms to next step 
+				tcnt=0;
+				str=1;
+			}
+			break;
+	}
+	
+}
 
 
 void EncoderInit(void)

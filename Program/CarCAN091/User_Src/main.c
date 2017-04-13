@@ -1,8 +1,8 @@
 //#include "SysConfig.h"
 #include "config.h"        //包含所有的驱动头文件
 #include "KeyBoard.h"
-#include "CANCom.h" 
-
+#include "CANCom.h"
+#include "stm32f10x_iwdg.h"
 
 
 //volatile uint8_t canRecData;
@@ -14,6 +14,7 @@ u8 trig=0;
 int volume=0;
 
 void NVIC_Configuration(void);
+void IWDG_Configuration(void);
 
 
 /********************************************
@@ -37,8 +38,9 @@ int main(void)
 	NVIC_Configuration();	//CAN NVIC Conifg - rec interrupt
 //#endif
 
-	//UART1_init(SysClock,9600); //串口1初始化
-	//UART2_init(19200);
+#ifndef DEBUG_MODE
+	IWDG_Configuration();
+#endif
 
 #if(0)  //(CAN_MODE_NOW==CAN_MODE_LOOPBACK)
 	TestRx=CAN_Polling();
@@ -77,11 +79,14 @@ int main(void)
 		if( millis() >= tPre + 10)
 		{
 			static u16 keysBuffPre;
-			static u8 tDiv=0;
+			static u8 tDiv=0,logDiv=0;
 
 			tPre = millis();
 			//keysBuffPre = keysBuff;
 			KeyScan();
+			//flash led state machine
+			LEDFlashSM();
+			LEDRadarFlashSM();
 			if(++tDiv >=2)
 			{
 				tDiv=0;
@@ -94,17 +99,15 @@ int main(void)
 				CAN_Transmit(CAN1, &TxMessage);
 				
 			}
-			/*
-			if(0)
+			if(++logDiv>=100) //1s一次
 			{
-				static char rotDirPre=0;
-				tDiv=0;
-				rotDirPre=rotDir;
-				rotDir=EncoderRead();
-				if((rotDir!=0) || (rotDir!=rotDirPre))
-					trig=1;
-			}*/
-			//printf("Test Cnt: %d\r\n",);
+		//		Uart2PutChar(0x01);
+				logDiv=0;
+#ifndef DEBUG_MODE
+				IWDG_ReloadCounter(); //喂狗
+#endif
+			}
+			
 		}
 		
 	}
@@ -156,3 +159,16 @@ void NVIC_Configuration(void)
   NVIC_Init(&NVIC_InitStructure);
 }
 
+void IWDG_Configuration(void)
+{
+    //使能对寄存器IWDG_PR和IWDG_RLR的写操作
+    IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);
+    //设置IWDG预分频值256:
+    //40K/256 = 156HZ(6.4ms)   5s/6.4ms=781；
+    IWDG_SetPrescaler(IWDG_Prescaler_256);
+    //设置IWDG重装载值，要小于0xfff（因为寄存器是12位的）
+    IWDG_SetReload(781);
+    //按照IWDG重装载寄存器的值 重新载入IWDG计数值；
+    IWDG_ReloadCounter();
+    IWDG_Enable();    //使能IWDG
+}

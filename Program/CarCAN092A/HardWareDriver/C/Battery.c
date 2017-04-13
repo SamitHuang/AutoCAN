@@ -17,7 +17,7 @@ void BatteryCheckInit()
  //先初PB0为模拟输入
  // RCC->APB2ENR|=1<<3;    //使能PORTB口时钟 
  // GPIOB->CRL&=0XFFFFFFF0;//PB0	anolog输入
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE); 
 	
 
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
@@ -35,7 +35,7 @@ void BatteryCheckInit()
 	RCC->CFGR|=2<<14;      	 
 	ADC1->CR1&=0XF0FFFF;   //工作模式清零
 	ADC1->CR1|=0<<16;      //独立工作模式  
-	ADC1->CR1&=~(1<<8);    //非扫描模式	  
+	ADC1->CR1&=~(1<<28);    //非扫描模式	  
 	ADC1->CR2&=~(1<<1);    //单次转换模式
 	ADC1->CR2&=~(7<<17);	   
 	ADC1->CR2|=7<<17;	     //软件控制转换  
@@ -63,9 +63,6 @@ void BatteryCheckInit()
 	ADC1->CR2|=1<<2;        //开启AD校准	   
 	while(ADC1->CR2&1<<2);  //等待校准结束
 	//该位由软件设置以开始校准，并在校准结束时由硬件清除  
-  
-  
-  
   
   
   Battery.BatReal = 3.95;//单位为v 电池实际电压  校准电压时修改

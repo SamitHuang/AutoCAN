@@ -77,8 +77,6 @@ int main(void)
 		
 	tPre = millis();
 	
-	
-	
 	while(1)
 	{
 		#if(1)
