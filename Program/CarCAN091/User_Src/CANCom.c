@@ -125,8 +125,8 @@ void CANInit()
 
   /* CAN cell init */
   CAN_InitStructure.CAN_TTCM = DISABLE;
-  CAN_InitStructure.CAN_ABOM = DISABLE;
-  CAN_InitStructure.CAN_AWUM = DISABLE;
+  CAN_InitStructure.CAN_ABOM = ENABLE;
+  CAN_InitStructure.CAN_AWUM = ENABLE;
   CAN_InitStructure.CAN_NART = DISABLE;
   CAN_InitStructure.CAN_RFLM = DISABLE;
   CAN_InitStructure.CAN_TXFP = DISABLE;
@@ -163,6 +163,7 @@ void CANInit()
   CAN_FilterInitStructure.CAN_FilterActivation = ENABLE;
   CAN_FilterInit(&CAN_FilterInitStructure);
 }
+
 
 //¿ØÖÆCAN Ð¾Æ¬¹¦ºÄ
 void CANChipSet(u8 onoff)

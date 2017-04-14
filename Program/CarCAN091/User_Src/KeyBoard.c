@@ -1,10 +1,10 @@
 #include "KeyBoard.h" 
 
 //Ö÷ÒªÅäÖÃ¡£
-#define BOARD_091 1
+//#define BOARD_091 1
 //#define BOARD_091A 1
 //#define BOARD_091B 1
-//#define BOARD_091C 1
+#define BOARD_091C 1
 
 #define SP_BIT_BSA_SYS_STS 22
 #define SP_BIT_FRONT_RADAR 30
