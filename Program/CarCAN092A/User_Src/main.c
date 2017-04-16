@@ -33,7 +33,7 @@ int main(void)
 	GPIO_SetBits(GPIOB,GPIO_Pin_3);
 	while(1);
 	*/
-
+	
 	KeyAndLEDInit();
 //	GPIO_SetBits(GPIOA, GPIO_Pin_4);
 	
@@ -90,8 +90,9 @@ int main(void)
 			//keysBuffPre = keysBuff;
 			KeyScan();
 			//处理Defrost和windheat控制
-			DefrostAndWindHeatProcessor(); 
-			
+			//DefrostAndWindHeatProcessor(); 
+			RearDefrostProcessor();
+			FrontWindHeatProcessor();
 			if(++tDiv >=10 )	//100ms发一次
 			{
 				tDiv=0;

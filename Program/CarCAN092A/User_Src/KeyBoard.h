@@ -43,6 +43,8 @@ u8 KeyScan(void);
 void LEDUpdate(u8 *datRec, u32 id);
 void Control(uint16_t pinx, u8 on);
 void DefrostAndWindHeatProcessor(void);
+void FrontWindHeatProcessor(void);
+void RearDefrostProcessor(void);
 
 //°´¼ü»º´æ
 typedef union key075

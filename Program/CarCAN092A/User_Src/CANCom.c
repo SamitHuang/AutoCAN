@@ -10,6 +10,65 @@ volatile TestStatus TestRx;
 extern uint8_t canRet;
 volatile u16 rpm;
 
+volatile u8 BCMKeyPosition=0;
+volatile u8 DVDKeyRearDefrost=0;
+volatile u8 VoiceRearDefrostRequest=0;
+volatile u8 EngineRunningStatus=0;
+volatile u8 ACFrontDefrostRequest=0;
+
+
+//将bit: start_idx,start_idx+1,...start_idx+len-1 的值读出来,存于pval. 如bit:19,20
+//todo: 不支持跨字节的多位提取。如(15,3)->取bit 15,16,17，跨了第2,3字节
+#define RB_NUM 5
+CAN_ReadBack_t ReadBackTable[RB_NUM]={
+			{19,2,ID_BCM,&BCMKeyPosition},
+			{7,1,ID_DVD,&DVDKeyRearDefrost},
+			{2,2,ID_DVD_EVENT,&VoiceRearDefrostRequest},
+			{43,1,ID_EMS,&EngineRunningStatus},
+			{38,1,ID_HVAC,&ACFrontDefrostRequest}
+		};
+
+//读取复杂逻辑的信号，写到readback表
+void ReadLogicIput(u8 *datRec, u32 id){
+	u8 i;
+	
+	for(i=0;i<RB_NUM;i++){
+		if(id == ReadBackTable[i].id ){
+			u8 Bn, bn,bitMask,val;
+			Bn = ReadBackTable[i].start_idx / 8;	//在第几个字节
+			bn = ReadBackTable[i].start_idx % 8;	//第几位
+			bitMask= (u8)((0x01<<ReadBackTable[i].len) - 1)<<bn;	//
+			val=(datRec[Bn] & bitMask) >> bn;
+				
+			*(ReadBackTable[i].pval)=val;
+			
+		}
+	}
+}
+
+void USB_LP_CAN1_RX0_IRQHandler(void)
+{
+  CAN_Receive(CAN1, CAN_FIFO0, &RxMessage);
+  if ((RxMessage.IDE == CAN_ID_STD) && (RxMessage.DLC == 8))
+  {
+		//if(CheckValidRecID(RxMessage.StdId))//交由ledupdate做ID过滤
+		//回读，更新LED灯
+		LEDUpdate(RxMessage.Data,RxMessage.StdId);
+		//回读逻辑功能需要的信息
+		ReadLogicIput(RxMessage.Data,RxMessage.StdId);
+		//回读转速
+		if(RxMessage.StdId==ID_EMS){
+			uint8_t engErr=0;
+			engErr = (RxMessage.Data[4] & 0x01);	//bit32
+			if(engErr==0)	//no err
+				rpm = (RxMessage.Data[0] * 256 + RxMessage.Data[1]) * 0.25 ;
+			else 
+				rpm = 0;
+		}
+  }
+}
+
+
 //key075_t keys;
 //将开关状态打包成表格中的CAN数据
 void Keys2candata(u16 sw, uint8_t *dat) 
@@ -41,26 +100,6 @@ u8 CheckValidRecID(u32 id)
 	return ret;
 }
 */
-
-void USB_LP_CAN1_RX0_IRQHandler(void)
-{
-  CAN_Receive(CAN1, CAN_FIFO0, &RxMessage);
-  if ((RxMessage.IDE == CAN_ID_STD) && (RxMessage.DLC == 8))
-  {
-		//if(CheckValidRecID(RxMessage.StdId))//交由ledupdate做ID过滤
-		//回读，更新LED灯
-		LEDUpdate(RxMessage.Data,RxMessage.StdId);
-		//回读转速
-		if(RxMessage.StdId==ID_EMS){
-			uint8_t engErr=0;
-			engErr = (RxMessage.Data[4] & 0x01);	//bit32
-			if(engErr==0)	//no err
-				rpm = (RxMessage.Data[0] * 256 + RxMessage.Data[1]) * 0.25 ;
-			else 
-				rpm = 0;
-		}
-  }
-}
 
 
 void CANInit()

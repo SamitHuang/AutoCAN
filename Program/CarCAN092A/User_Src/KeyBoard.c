@@ -5,12 +5,15 @@
 #define PIN_DEFROST_LED GPIO_Pin_0
 #define PIN_WIND_HEAT_LED GPIO_Pin_5
 
-#define BIT_DEFROST_SW	9
-#define BIT_WIND_HEAT_SW 12
+#define BIT_SDB_REAR_DEFROST	9
+#define BIT_SDB_FRONT_WIND_HEAT 12
 
 //u8 ctrlSw[2]={0};
-u8 swDefrostTrig=0,swWindHeatTrig=0;
+u8 swRearDefrostTrig=0,swFrontWindHeatTrig=0;
+u8 isFrontWindHeatExist=0;
 //u8 swDefrostState=0,swWindHeatState=0;
+
+void InsertVal2Keybuff(u8 CAN_bitn,u8 val);
 
 
 #ifdef BOARD_092
@@ -19,7 +22,7 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOB,GPIO_Pin_8,5, GPIOA,GPIO_Pin_7,6,ID_HVAC},		//AC Cycle
 											{GPIOB,GPIO_Pin_7,3, GPIOB,GPIO_Pin_1,31,ID_HVAC},		//AC Max
 											{GPIOA,GPIO_Pin_8,8, GPIOB,GPIO_Pin_10,38,ID_HVAC},		//Front Defrost
-											{GPIOB,GPIO_Pin_6,9,GPIOB,GPIO_Pin_0,0xFF,0},//R_Defrost
+											{GPIOB,GPIO_Pin_6,BIT_SDB_REAR_DEFROST,GPIOB,GPIO_Pin_0,0xFF,0},//R_Defrost		//后除霜，状态的发出要综合判断，特殊处理
 											{GPIOB,GPIO_Pin_13,0,GPIOB,GPIO_Pin_11,0,ID_HVAC},	//AC Request
 											{GPIOA,GPIO_Pin_15,10,0,0,0,0},		//PM25  //GPIOA,GPIO_Pin_4,63,ID_DVD}
 											{GPIOB,GPIO_Pin_5,7,0,0},		//Fan down
@@ -33,14 +36,13 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOB,GPIO_Pin_8,2, GPIOA,GPIO_Pin_7,45,ID_HVAC},		//Rear AC
 											{GPIOB,GPIO_Pin_7,4, GPIOB,GPIO_Pin_1,44,ID_HVAC},		//Climate
 											{GPIOA,GPIO_Pin_8,8, GPIOB,GPIO_Pin_10,38,ID_HVAC},	//Front Defrost
-											{GPIOB,GPIO_Pin_6,9,GPIOB,GPIO_Pin_0,0xFF,0},//R_Defrost sw
+											{GPIOB,GPIO_Pin_6,BIT_SDB_REAR_DEFROST,GPIOB,GPIO_Pin_0,0xFF,0},//R_Defrost sw
 											{GPIOB,GPIO_Pin_13,13,GPIOB,GPIO_Pin_11,55,ID_AC},	//Anion
 											{GPIOA,GPIO_Pin_15,10,0,0,0,0},		//PM25 
-											{GPIOA,GPIO_Pin_9,5, GPIOA,GPIO_Pin_1,6,ID_HVAC},		//AC Cycle
-											{GPIOB,GPIO_Pin_5,12,GPIOA,GPIO_Pin_5,0xFF,0},		//Front Wind heat sw
-//											{GPIOB,GPIO_Pin_5,6,0,0},		//Fan up
-//											{GPIOA,GPIO_Pin_9,7,0,0},		//Fan down
-
+											//{GPIOA,GPIO_Pin_9,5, 0,0,0,0},		//AC Cycle
+											//{GPIOB,GPIO_Pin_5,BIT_SDB_FRONT_WIND_HEAT,0,0,0,0},		//Front Wind heat sw
+											{GPIOB,GPIO_Pin_5,7,0,0},		//Fan down
+											{GPIOA,GPIO_Pin_9,6,0,0},		//Fan up									
 											};
 #endif
 #ifdef BOARD_092B
@@ -49,11 +51,11 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOB,GPIO_Pin_8,2, GPIOA,GPIO_Pin_7,45,ID_HVAC},		//Rear AC
 											{GPIOB,GPIO_Pin_7,4, GPIOB,GPIO_Pin_1,44,ID_HVAC},		//Climate
 											{GPIOA,GPIO_Pin_8,8, GPIOB,GPIO_Pin_10,38,ID_HVAC},	//Front Defrost
-											{GPIOB,GPIO_Pin_6,9,GPIOB,GPIO_Pin_0,0xFF,0},//R_Defrost sw
+											{GPIOB,GPIO_Pin_6,BIT_SDB_REAR_DEFROST,GPIOB,GPIO_Pin_0,0xFF,0},//R_Defrost sw
 											{GPIOB,GPIO_Pin_13,13,GPIOB,GPIO_Pin_11,55,ID_AC},	//Anion
 											{GPIOA,GPIO_Pin_15,10,0,0,0,0},		//PM25	//GPIOA,GPIO_Pin_4,63,ID_DVD
 											{GPIOA,GPIO_Pin_9,11,GPIOA,GPIO_Pin_1,7,ID_DVR},		//DVD Urgency 
-											{GPIOB,GPIO_Pin_5,12,GPIOA,GPIO_Pin_5,0xFF,0},		//Front Wind heat sw
+											{GPIOB,GPIO_Pin_5,BIT_SDB_FRONT_WIND_HEAT,GPIOA,GPIO_Pin_5,0xFF,0},		//Front Wind heat sw
 //											{GPIOB,GPIO_Pin_5,6,0,0},		//Fan up
 //											{GPIOA,GPIO_Pin_9,7,0,0},		//Fan down
 											};
@@ -122,6 +124,113 @@ void Control(uint16_t pinx, u8 on)
 	else
 		GPIO_ResetBits(GPIOx,pinx);
 }
+
+//每10ms运行一次，必须放在KeyScan()后面,keys2candata的前面
+//#define STAY_TIME (u32)90000
+void RearDefrostProcessor(void){
+	static u8 sd=0;	//state rear defrost 
+	static u32 td=0;	//time cnt
+	static u8 DVDKeyRearDefrostPre=0;
+	static u8 DVDRearDefrostTrig=0;
+	//process input
+	if((DVDKeyRearDefrostPre==0) && (DVDKeyRearDefrost==1))
+		DVDRearDefrostTrig=1;
+	DVDKeyRearDefrostPre = DVDKeyRearDefrost;
+	
+	//state machine
+	switch(sd){
+	case 0:
+		//idle
+		if((swRearDefrostTrig==1) || 	//SDB Rear Defrost switch
+				(VoiceRearDefrostRequest==2) || //Voice request ON
+				(DVDRearDefrostTrig==1)	//DVD request ON
+				){
+			swRearDefrostTrig=0;
+			DVDRearDefrostTrig=0;
+			if(BCMKeyPosition>=2){
+				//仅在点火档为ON时开启
+				Control(PIN_DEFROST_CTRL,1);
+				Control(PIN_DEFROST_LED,1);	
+				td=0;
+				sd=1;
+			}
+			//InsertVal2Keybuff(BIT_SDB_REAR_DEFROST,1);
+			
+		}
+		break;
+	case 1:
+		//working
+		//timing
+		//u8 isTimeOver=0;
+		td++;
+		if(td>=90000){//15*60*100,15mins
+			td=0;
+			Control(PIN_DEFROST_CTRL,0);
+			Control(PIN_DEFROST_LED,0);
+			sd=0;
+		}
+		//turn off manually 
+		if((swRearDefrostTrig==1) ||
+				(VoiceRearDefrostRequest==1) || //request OFF
+				(DVDRearDefrostTrig==1)
+				){
+			swRearDefrostTrig=0;
+			DVDRearDefrostTrig=0;
+			Control(PIN_DEFROST_CTRL,0);
+			Control(PIN_DEFROST_LED,0);
+			sd=0;
+				
+		}
+		break;
+	}
+	//发后除霜工作状态到CAN总线，以让音响大屏点亮对应信号
+	//if(stateRearDefrost==1)
+	InsertVal2Keybuff(BIT_SDB_REAR_DEFROST,sd);
+}
+
+#ifdef BOARD_092A
+//092没有此功能
+void FrontWindHeatProcessor(void){}
+#else
+void FrontWindHeatProcessor(void){
+	static u8 st=0;	//state rear defrost 
+	static u32 tc;	//time cnt
+	u8 isTimeOver=0;
+	
+	switch(st){
+	case 0:
+		//idle
+		if((swFrontWindHeatTrig==1)||(ACFrontDefrostRequest==1)){
+			swFrontWindHeatTrig=0;
+			if((EngineRunningStatus==1) && (BCMKeyPosition>=2)){
+				//满足这两个条件才允许打开
+				Control(PIN_WIND_HEAT_CTRL,1);
+				Control(PIN_WIND_HEAT_LED,1);
+				tc=0;
+				st=1;
+			}
+		}
+		break;
+	case 1:
+		
+		//working
+		//timeing
+		tc++;
+		if(tc>=30000){	//5*60*100
+			tc=0;
+			isTimeOver=1;
+		}
+		if((swFrontWindHeatTrig==1) || (isTimeOver==1) || (EngineRunningStatus==0)){
+			swFrontWindHeatTrig=0;
+			Control(PIN_WIND_HEAT_CTRL,0);
+			Control(PIN_WIND_HEAT_LED,0);
+			st=0;
+		}
+		break;
+	}
+}
+#endif
+
 //每10ms运行一次
 void DefrostAndWindHeatProcessor(void)
 {
@@ -130,8 +239,8 @@ void DefrostAndWindHeatProcessor(void)
 	
 	switch(stateDefrost){
 	case 0://未开启
-		if(swDefrostTrig==1){
-			swDefrostTrig=0;
+		if(swRearDefrostTrig==1){
+			swRearDefrostTrig=0;
 		
 			Control(PIN_DEFROST_CTRL,1);
 			Control(PIN_DEFROST_LED,1);
@@ -143,13 +252,13 @@ void DefrostAndWindHeatProcessor(void)
 		break;
 	case 1://已开启
 		td++;
-		if(td>=90000){//15*60*100
+		if(td>=90000){//15*60*100,15mins
 			Control(PIN_DEFROST_CTRL,0);
 			Control(PIN_DEFROST_LED,0);
 			stateDefrost=0;
 		}
-		if(swDefrostTrig==1){
-			swDefrostTrig=0;
+		if(swRearDefrostTrig==1){
+			swRearDefrostTrig=0;
 			//手动关闭
 			Control(PIN_DEFROST_CTRL,0);
 			Control(PIN_DEFROST_LED,0);
@@ -160,8 +269,8 @@ void DefrostAndWindHeatProcessor(void)
 	
 	switch(stateWindHeat){
 	case 0://未开启
-		if(swWindHeatTrig==1){
-			swWindHeatTrig=0;
+		if(swFrontWindHeatTrig==1){
+			swFrontWindHeatTrig=0;
 			if(rpm>=750)
 			{
 				Control(PIN_WIND_HEAT_CTRL,1);
@@ -179,8 +288,8 @@ void DefrostAndWindHeatProcessor(void)
 			Control(PIN_WIND_HEAT_LED,0);
 			stateWindHeat=0;
 		}
-		if(swWindHeatTrig==1){
-			swWindHeatTrig=0;
+		if(swFrontWindHeatTrig==1){
+			swFrontWindHeatTrig=0;
 			//手动关闭
 			Control(PIN_WIND_HEAT_CTRL,0);
 			Control(PIN_WIND_HEAT_LED,0);
@@ -197,7 +306,19 @@ void DefrostAndWindHeatProcessor(void)
 		break;
 	}
 }
-
+//改向keysbuff中某一位值 ，CAN_bitn是通信协议中的位
+void InsertVal2Keybuff(u8 CAN_bitn,u8 val){
+	u8 i;
+	for(i=0;i<IND_KEY_NUM;i++)
+	{
+		if(indKeyIO[i].bitn==CAN_bitn){
+				if(val==0)
+					keysBuff &= ~(((u16)1)<<i);
+				else
+					keysBuff |= ((u16)1)<<i;
+		}	
+	}
+}
 //每10ms调用一次，获得即时键值，获得每个按键的逻辑开关状态，按一次进行反转
 //返回触发信号
 u8 KeyScan(void)
@@ -217,7 +338,7 @@ u8 KeyScan(void)
 				if(tempVal==0)
 				{
 					//检测控制位，自锁翻转
-					if((indKeyIO[i].bitn==BIT_DEFROST_SW)||(indKeyIO[i].bitn==BIT_WIND_HEAT_SW))
+					if((indKeyIO[i].bitn==BIT_SDB_REAR_DEFROST)||(indKeyIO[i].bitn==BIT_SDB_FRONT_WIND_HEAT))
 					{
 						/* 不用发送 Rear Defrost SW和wind heart Sw
 						u8 on=0;
@@ -228,12 +349,12 @@ u8 KeyScan(void)
 								keysBuff &=~(((u16)1)<<i);
 								on=0;
 						}*/
-						if(indKeyIO[i].bitn==BIT_DEFROST_SW){
-							swDefrostTrig=1;
+						if(indKeyIO[i].bitn==BIT_SDB_REAR_DEFROST){
+							swRearDefrostTrig=1;
 							//swDefrostState=on;
 						}
-						if(indKeyIO[i].bitn==BIT_WIND_HEAT_SW){
-							swWindHeatTrig=1;
+						if(indKeyIO[i].bitn==BIT_SDB_FRONT_WIND_HEAT){
+							swFrontWindHeatTrig=1;
 							//swWindHeatState=on;
 						}
 						ks[i]=1;
@@ -249,7 +370,7 @@ u8 KeyScan(void)
 				if(tempVal==1)
 				{
 					//检测控制位
-					if((indKeyIO[i].bitn==BIT_DEFROST_SW)||(indKeyIO[i].bitn==BIT_WIND_HEAT_SW))
+					if((indKeyIO[i].bitn==BIT_SDB_REAR_DEFROST)||(indKeyIO[i].bitn==BIT_SDB_FRONT_WIND_HEAT))
 					{
 						ks[i] = 0;
 					}

@@ -48,7 +48,7 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 #ifdef BOARD_099B
 KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOA,GPIO_Pin_4,32,0,0,0,0},		//KEY1 DVD_TEL
-											{GPIOA,GPIO_Pin_5,25, GPIOB,GPIO_Pin_11,6,ID_AVM},	//KEY2 LDWS Skey；LED: LDWS Skey LED
+											{GPIOA,GPIO_Pin_5,25, 0,0,0,0},	//KEY2 LDWS Skey；LED: LDWS Skey LED
 											{GPIOA,GPIO_Pin_6,24, 0,0,0,0},		//KEY3 DVD MENU; 
 											{GPIOA,GPIO_Pin_7,15, GPIOB,GPIO_Pin_10,2,ID_ESP},	//KEY4 ESC Off  LED: ESC LED
 											{GPIOB,GPIO_Pin_0,16,	GPIOB,GPIO_Pin_2,15,ID_ESP},	//KEY5 HDC 			LED: HDC LED ??????
@@ -80,7 +80,7 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 #ifdef BOARD_099D	//跟B相近, 多了StartStopSwitch
 KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOA,GPIO_Pin_4,32,0,0,0,0},		//KEY1 DVD_TEL
-											{GPIOA,GPIO_Pin_5,25, GPIOB,GPIO_Pin_11,6,ID_AVM},	//KEY2 LDWS Skey；LED: LDWS Skey LED
+											{GPIOA,GPIO_Pin_5,25, 0,0,0,0},	//KEY2 LDWS Skey；LED: LDWS Skey LED
 											{GPIOA,GPIO_Pin_6,24, 0,0,0,0},		//KEY3 DVD MENU; 
 											{GPIOA,GPIO_Pin_7,15, GPIOB,GPIO_Pin_10,2,ID_ESP},	//KEY4 ESC Off  LED: ESC LED
 											{GPIOB,GPIO_Pin_0,16,	GPIOB,GPIO_Pin_2,15,ID_ESP},	//KEY5 HDC 			LED: HDC LED ??????
