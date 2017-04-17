@@ -15,6 +15,7 @@ volatile u8 DVDKeyRearDefrost=0;
 volatile u8 VoiceRearDefrostRequest=0;
 volatile u8 EngineRunningStatus=0;
 volatile u8 ACFrontDefrostRequest=0;
+volatile u32 lastUpdateBCMKeyPosition=0;
 
 
 //将bit: start_idx,start_idx+1,...start_idx+len-1 的值读出来,存于pval. 如bit:19,20
@@ -41,6 +42,9 @@ void ReadLogicIput(u8 *datRec, u32 id){
 			val=(datRec[Bn] & bitMask) >> bn;
 				
 			*(ReadBackTable[i].pval)=val;
+			if(ReadBackTable[i].pval == &BCMKeyPosition){
+				lastUpdateBCMKeyPosition=millis();
+			}
 			
 		}
 	}

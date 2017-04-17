@@ -47,5 +47,6 @@ extern volatile u8 DVDKeyRearDefrost;
 extern volatile u8 VoiceRearDefrostRequest;
 extern volatile u8 EngineRunningStatus;
 extern volatile u8 ACFrontDefrostRequest;
+extern volatile u32 lastUpdateBCMKeyPosition;
 
 #endif

@@ -126,12 +126,15 @@ void Control(uint16_t pinx, u8 on)
 }
 
 //每10ms运行一次，必须放在KeyScan()后面,keys2candata的前面
-//#define STAY_TIME (u32)90000
+//#define STAY_TIME (u32)90000	//unit: *10ms
+#define TIME_LOST_ON_KEY_POSTION 5000	//unit: ms
 void RearDefrostProcessor(void){
 	static u8 sd=0;	//state rear defrost 
 	static u32 td=0;	//time cnt
 	static u8 DVDKeyRearDefrostPre=0;
 	static u8 DVDRearDefrostTrig=0;
+	u8 isONSignalLost=0;
+	u32 	tCur=0;
 	//process input
 	if((DVDKeyRearDefrostPre==0) && (DVDKeyRearDefrost==1))
 		DVDRearDefrostTrig=1;
@@ -162,6 +165,11 @@ void RearDefrostProcessor(void){
 		//working
 		//timing
 		//u8 isTimeOver=0;
+		//判断信号是否丢失
+		tCur=millis();
+		if(tCur - lastUpdateBCMKeyPosition >= TIME_LOST_ON_KEY_POSTION)
+			isONSignalLost=1;
+		//定时15mins
 		td++;
 		if(td>=90000){//15*60*100,15mins
 			td=0;
@@ -172,7 +180,9 @@ void RearDefrostProcessor(void){
 		//turn off manually 
 		if((swRearDefrostTrig==1) ||
 				(VoiceRearDefrostRequest==1) || //request OFF
-				(DVDRearDefrostTrig==1)
+				(DVDRearDefrostTrig==1) ||
+				(isONSignalLost==1) ||
+				(BCMKeyPosition<2) 
 				){
 			swRearDefrostTrig=0;
 			DVDRearDefrostTrig=0;
@@ -196,7 +206,8 @@ void FrontWindHeatProcessor(void){
 	static u8 st=0;	//state rear defrost 
 	static u32 tc;	//time cnt
 	u8 isTimeOver=0;
-	
+	u8 isONSignalLost=0;
+	u32 	tCur;
 	switch(st){
 	case 0:
 		//idle
@@ -215,12 +226,17 @@ void FrontWindHeatProcessor(void){
 		
 		//working
 		//timeing
+		//判断信号是否丢失
+		tCur=millis();
+		if(tCur - lastUpdateBCMKeyPosition >= TIME_LOST_ON_KEY_POSTION)
+			isONSignalLost=1;
 		tc++;
 		if(tc>=30000){	//5*60*100
 			tc=0;
 			isTimeOver=1;
 		}
-		if((swFrontWindHeatTrig==1) || (isTimeOver==1) || (EngineRunningStatus==0)){
+		if((swFrontWindHeatTrig==1) || (isTimeOver==1) || (EngineRunningStatus==0) ||
+			(isONSignalLost==1) || (BCMKeyPosition<2 )){ 
 			swFrontWindHeatTrig=0;
 			Control(PIN_WIND_HEAT_CTRL,0);
 			Control(PIN_WIND_HEAT_LED,0);

@@ -91,7 +91,7 @@ int main(void)
 			KeyScan();
 			//处理Defrost和windheat控制
 			//DefrostAndWindHeatProcessor(); 
-			RearDefrostProcessor();
+			RearDefrostProcessor(); 
 			FrontWindHeatProcessor();
 			if(++tDiv >=10 )	//100ms发一次
 			{

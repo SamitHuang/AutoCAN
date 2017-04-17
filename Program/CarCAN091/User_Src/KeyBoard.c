@@ -69,7 +69,7 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOB,GPIO_Pin_13,15, GPIOB,GPIO_Pin_12,2,ID_ESP},		//KEY2 ESC£» ESC LED; --> TOBE Fixed!!
 											{GPIOB,GPIO_Pin_10,6, GPIOB,GPIO_Pin_11,SP_BIT_FRONT_RADAR,ID_PDC},		//KEY3 Front radar
 											{GPIOB,GPIO_Pin_14,31, 0,0},	//KEY4 MUTE
-											{GPIOB,GPIO_Pin_0,6,GPIOB,GPIO_Pin_1,SP_BIT_BSA_SYS_STS,ID_PDC},	//KEY5 MENU (B C:BSA_SW);  BSA LED
+											{GPIOB,GPIO_Pin_0,7,GPIOB,GPIO_Pin_1,SP_BIT_BSA_SYS_STS,ID_PDC},	//KEY5 MENU (B C:BSA_SW);  BSA LED
 											{GPIOB,GPIO_Pin_15,32,0,0},		//KEY6 TEL		
 											{GPIOA,GPIO_Pin_4,18,0,0},		//KEY7 NAV_SW	C:AVM Skey
 											{GPIOA,GPIO_Pin_15,33,0,0},		//KEY8 C:RADIO (B:AVM key) 
