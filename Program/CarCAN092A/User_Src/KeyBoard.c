@@ -23,7 +23,7 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOB,GPIO_Pin_7,3, GPIOB,GPIO_Pin_1,31,ID_HVAC},		//AC Max
 											{GPIOA,GPIO_Pin_8,8, GPIOB,GPIO_Pin_10,38,ID_HVAC},		//Front Defrost
 											{GPIOB,GPIO_Pin_6,BIT_SDB_REAR_DEFROST,GPIOB,GPIO_Pin_0,0xFF,0},//R_Defrost		//后除霜，状态的发出要综合判断，特殊处理
-											{GPIOB,GPIO_Pin_13,0,GPIOB,GPIO_Pin_11,0,ID_HVAC},	//AC Request
+											{GPIOB,GPIO_Pin_13,0,GPIOB,GPIO_Pin_11,29,ID_HVAC},	//AC Request
 											{GPIOA,GPIO_Pin_15,10,0,0,0,0},		//PM25  //GPIOA,GPIO_Pin_4,63,ID_DVD}
 											{GPIOB,GPIO_Pin_5,7,0,0},		//Fan down
 											{GPIOA,GPIO_Pin_9,6,0,0},		//Fan up
@@ -150,6 +150,7 @@ void RearDefrostProcessor(void){
 				){
 			swRearDefrostTrig=0;
 			DVDRearDefrostTrig=0;
+			VoiceRearDefrostRequest=0; 	//语音信号不是一直发，需要手动清零.
 			if(BCMKeyPosition>=2){
 				//仅在点火档为ON时开启
 				Control(PIN_DEFROST_CTRL,1);
@@ -186,6 +187,8 @@ void RearDefrostProcessor(void){
 				){
 			swRearDefrostTrig=0;
 			DVDRearDefrostTrig=0;
+			VoiceRearDefrostRequest=0;
+			//VoiceRearDefrostRequest=0; 	//语音
 			Control(PIN_DEFROST_CTRL,0);
 			Control(PIN_DEFROST_LED,0);
 			sd=0;
@@ -208,11 +211,17 @@ void FrontWindHeatProcessor(void){
 	u8 isTimeOver=0;
 	u8 isONSignalLost=0;
 	u32 	tCur;
+	static u8 ACFrontDefrostPre=0;
+	u8 ACFrontDefrostTrig=0;
+	if(ACFrontDefrostPre==0 && ACFrontDefrostRequest==1)
+		ACFrontDefrostTrig=1;
+	ACFrontDefrostPre = ACFrontDefrostRequest;
 	switch(st){
 	case 0:
 		//idle
-		if((swFrontWindHeatTrig==1)||(ACFrontDefrostRequest==1)){
+		if((swFrontWindHeatTrig==1)||(ACFrontDefrostTrig==1)){
 			swFrontWindHeatTrig=0;
+			ACFrontDefrostTrig=0;
 			if((EngineRunningStatus==1) && (BCMKeyPosition>=2)){
 				//满足这两个条件才允许打开
 				Control(PIN_WIND_HEAT_CTRL,1);
