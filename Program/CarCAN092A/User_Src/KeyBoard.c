@@ -24,7 +24,7 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOA,GPIO_Pin_8,8, GPIOB,GPIO_Pin_10,38,ID_HVAC},		//Front Defrost
 											{GPIOB,GPIO_Pin_6,BIT_SDB_REAR_DEFROST,GPIOB,GPIO_Pin_0,0xFF,0},//R_Defrost		//后除霜，状态的发出要综合判断，特殊处理
 											{GPIOB,GPIO_Pin_13,0,GPIOB,GPIO_Pin_11,29,ID_HVAC},	//AC Request
-											{GPIOA,GPIO_Pin_15,10,0,0,0,0},		//PM25  //GPIOA,GPIO_Pin_4,63,ID_DVD}
+											{GPIOA,GPIO_Pin_15,14,0,0,0,0},		//PM25  //GPIOA,GPIO_Pin_4,63,ID_DVD}
 											{GPIOB,GPIO_Pin_5,7,0,0},		//Fan down
 											{GPIOA,GPIO_Pin_9,6,0,0},		//Fan up
 											
@@ -38,7 +38,7 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOA,GPIO_Pin_8,8, GPIOB,GPIO_Pin_10,38,ID_HVAC},	//Front Defrost
 											{GPIOB,GPIO_Pin_6,BIT_SDB_REAR_DEFROST,GPIOB,GPIO_Pin_0,0xFF,0},//R_Defrost sw
 											{GPIOB,GPIO_Pin_13,13,GPIOB,GPIO_Pin_11,55,ID_AC},	//Anion
-											{GPIOA,GPIO_Pin_15,10,0,0,0,0},		//PM25 
+											{GPIOA,GPIO_Pin_15,14,0,0,0,0},		//PM25 
 											//{GPIOA,GPIO_Pin_9,5, 0,0,0,0},		//AC Cycle
 											//{GPIOB,GPIO_Pin_5,BIT_SDB_FRONT_WIND_HEAT,0,0,0,0},		//Front Wind heat sw
 											{GPIOB,GPIO_Pin_5,7,0,0},		//Fan down
@@ -53,13 +53,27 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOA,GPIO_Pin_8,8, GPIOB,GPIO_Pin_10,38,ID_HVAC},	//Front Defrost
 											{GPIOB,GPIO_Pin_6,BIT_SDB_REAR_DEFROST,GPIOB,GPIO_Pin_0,0xFF,0},//R_Defrost sw
 											{GPIOB,GPIO_Pin_13,13,GPIOB,GPIO_Pin_11,55,ID_AC},	//Anion
-											{GPIOA,GPIO_Pin_15,10,0,0,0,0},		//PM25	//GPIOA,GPIO_Pin_4,63,ID_DVD
+											{GPIOA,GPIO_Pin_15,14,0,0,0,0},		//PM25	//GPIOA,GPIO_Pin_4,63,ID_DVD
 											{GPIOA,GPIO_Pin_9,11,GPIOA,GPIO_Pin_1,7,ID_DVR},		//DVD Urgency 
 											{GPIOB,GPIO_Pin_5,BIT_SDB_FRONT_WIND_HEAT,GPIOA,GPIO_Pin_5,0xFF,0},		//Front Wind heat sw
 //											{GPIOB,GPIO_Pin_5,6,0,0},		//Fan up
 //											{GPIOA,GPIO_Pin_9,7,0,0},		//Fan down
 											};
 #endif
+#ifdef BOARD_092C
+KeyIO_t indKeyIO[IND_KEY_NUM] = {
+											{GPIOB,GPIO_Pin_9,1,GPIOA,GPIO_Pin_4,2,ID_HVAC},		//AC Off
+											{GPIOB,GPIO_Pin_8,2, GPIOA,GPIO_Pin_7,45,ID_HVAC},		//Rear AC
+											{GPIOB,GPIO_Pin_7,4, GPIOB,GPIO_Pin_1,44,ID_HVAC},		//Climate
+											{GPIOA,GPIO_Pin_8,8, GPIOB,GPIO_Pin_10,38,ID_HVAC},	//Front Defrost
+											{GPIOB,GPIO_Pin_6,BIT_SDB_REAR_DEFROST,GPIOB,GPIO_Pin_0,0xFF,0},//R_Defrost sw
+											{GPIOB,GPIO_Pin_13,13,GPIOB,GPIO_Pin_11,55,ID_AC},	//Anion
+											{GPIOA,GPIO_Pin_15,14,0,0,0,0},		//PM25	//GPIOA,GPIO_Pin_4,63,ID_DVD
+											{GPIOA,GPIO_Pin_9,11,GPIOA,GPIO_Pin_1,7,ID_DVR},		//DVD Urgency 
+											{GPIOB,GPIO_Pin_5,5,GPIOA,GPIO_Pin_5,6,0},		//Front Wind heat sw
+											};
+#endif
+
 
 
 //键值缓存
