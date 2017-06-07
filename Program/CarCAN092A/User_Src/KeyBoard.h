@@ -7,6 +7,7 @@
 #define BOARD_092  1 
 //#define BOARD_092A 1
 //#define BOARD_092B 1
+//#define BOARD_092C 1
 
 #ifdef BOARD_092
 	#define IND_KEY_NUM 9
@@ -17,6 +18,10 @@
 #ifdef BOARD_092B
 	#define IND_KEY_NUM 9
 #endif
+#ifdef BOARD_092C
+	#define IND_KEY_NUM 9
+#endif
+
 
 typedef enum
 { 

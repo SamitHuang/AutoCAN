@@ -3,15 +3,20 @@
 #include "KeyBoard.h"
 #include "CANCom.h" 
 
-
+#define WT_SLOW 1000	//unit:ms
+#define WT_FAST	100
 
 //volatile uint8_t canRecData;
 uint16_t i=0;
 u32 tPre=0;
+uint32_t usPre=0;
 static u8 ctrlDefrostState,ctrlWindHeatState;
 
 void NVIC_Configuration(void);
 void IWDG_Configuration(void);
+//for debug
+u8 temp_busoff;
+u8 temp_tec;
 
 /********************************************
 ********************************************/
@@ -76,6 +81,7 @@ int main(void)
 //	TxMessage.Data[7] = 0xA7;
 		
 	tPre = millis();
+	usPre = micros();
 	
 	while(1)
 	{
@@ -107,6 +113,128 @@ int main(void)
 				IWDG_ReloadCounter(); //喂狗
 			}
 		}
+		
+		//100us
+		if(micros()>=usPre+100){
+			static u8 st=0;
+			usPre=micros();
+			temp_busoff=CAN_ChkBusoff();
+			temp_tec=CAN_GetLSBTransmitErrorCounter(CAN1);
+			if(0){//(temp_busoff){
+				u8 modeRet;
+				modeRet=CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Initialization);
+				if(modeRet==CAN_ModeStatus_Success){
+					//init successfully, then enter normal mode
+					CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Normal);
+					delay_us(1000);
+				}
+			}
+			
+			switch(st){
+				static u8 fFailTime=0,failTime=0;
+				static u8 sFailTime=0;
+				static u16 waitTime=0;
+				
+				case 0:
+					//正常工作
+					if(temp_busoff){
+						u8 modeRet;
+						modeRet=CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Initialization);
+						if(modeRet==CAN_ModeStatus_Success){
+							//init successfully, then enter normal mode
+							modeRet=CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Normal);
+							if(modeRet==CAN_ModeStatus_Success){
+								delay_us(1000);
+								if(CAN_ChkBusoff()){
+										st=1;
+										failTime=1;
+								}
+							}else{
+								st=1;
+								failTime=1;
+							}
+						}else{
+							//fail to sychronize, need to reinit
+							st=1;
+							failTime=1;
+						}
+					}
+					break;
+				case 1:
+					//快恢复，至多5次
+					{
+						static u16 tcnt=0;
+						u8 modeRet;
+						
+						tcnt++;
+						if(tcnt>=WT_FAST*10){
+							//100ms
+							tcnt=0;
+							modeRet=CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Initialization);
+							if(modeRet==CAN_ModeStatus_Success){
+								modeRet=CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Normal);
+								if(modeRet==CAN_ModeStatus_Success){
+									delay_us(1000);
+									if(CAN_ChkBusoff()){
+										//fail again
+										failTime++;
+										if(failTime>=5){
+											failTime=0;
+											st=2;
+										}
+									}else{
+										st=0;
+										failTime=0;
+									}
+								}else{
+									//fail when req normal mode
+									failTime++;
+									if(failTime>=5){
+										failTime=0;
+										st=2;
+									}
+								}
+							}else{
+								//fail when req init mode
+								failTime++;
+								if(failTime>=5){
+									failTime=0;
+									st=2;
+								}
+							}
+						}
+					}
+					break;
+				case 2:
+					//慢恢复
+					{
+						static u16 tcnt=0;
+						u8 modeRet;
+						
+						tcnt++;
+						if(tcnt>=WT_SLOW*10){
+							//1000ms
+							tcnt=0;
+							modeRet=CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Initialization);
+							if(modeRet==CAN_ModeStatus_Success){
+								modeRet=CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Normal);
+								if(modeRet==CAN_ModeStatus_Success){
+									delay_us(1000);
+									if(CAN_ChkBusoff()){
+										//fail again
+										failTime++;
+									}else{
+										st=0;
+										failTime=0;
+									}
+								}
+							}
+						}
+					}
+					break;
+			}
+		}
+		
 		#else
 		//Keys2candata(keysBuff,TxMessage.Data);
 		TxMessage.Data[0]=0x55;

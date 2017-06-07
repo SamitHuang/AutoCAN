@@ -153,8 +153,8 @@ void CANInit()
 
   /* CAN cell init */
   CAN_InitStructure.CAN_TTCM = DISABLE;
-  //CAN_InitStructure.CAN_ABOM = DISABLE;
-	CAN_InitStructure.CAN_ABOM = ENABLE;
+  CAN_InitStructure.CAN_ABOM = DISABLE;
+	//CAN_InitStructure.CAN_ABOM = ENABLE;
   CAN_InitStructure.CAN_AWUM = ENABLE;
   CAN_InitStructure.CAN_NART = DISABLE;
   CAN_InitStructure.CAN_RFLM = DISABLE;
@@ -174,6 +174,9 @@ void CANInit()
   CAN_InitStructure.CAN_Prescaler = 8;
 #endif
   CAN_Init(CAN1, &CAN_InitStructure);
+	
+	//使能busoff中断
+	//CAN_ITConfig(CAN1, CAN_IT_BOF, ENABLE); 
 
   /* CAN filter init */
 #ifdef  __CAN1_USED__
@@ -192,6 +195,68 @@ void CANInit()
   CAN_FilterInitStructure.CAN_FilterActivation = ENABLE;
   CAN_FilterInit(&CAN_FilterInitStructure);
 }
+
+u8 CAN_ChkBusoff()
+{
+	ITStatus boff;
+	//boff = CheckITStatus(CAN1->ESR, CAN_ESR_BOFF);
+	if ((CAN1->ESR & CAN_ESR_BOFF) != (uint32_t)RESET){
+		boff=SET;
+	}else{
+		boff=RESET;
+	}
+	return boff;
+}
+/*
+void CAN_ReqLeaveBusoff()
+{
+	//Request initialisation, INit RuQuest, set to 1, 先初始化
+  CAN1->MCR |= CAN_MCR_INRQ ;
+	delay_us(10);
+	//Request leave initialisation, reset to be 0，再进入工作模式
+  CAN1->MCR &= ~(uint32_t)CAN_MCR_INRQ;
+}
+//execute every 1ms
+#define WT (int)(2800/1000.0+0.5)	//128*11bits
+#define T_REMAIN_QUICK 100
+#define T_REMAIN_SLOW  1000
+void CAN_RecoverFSM()
+{
+	static u8 st;
+	static u8 tcnt;
+	u8 boff;
+	boff=CAN_ChkBusoff();
+	
+	switch(st){
+		case 0://working fine
+			if(boff==SET){
+				u8 modeRet;
+				//st=1;
+				//CAN_ReqLeaveBusoff();
+				modeRet=CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Initialization);
+				if(modeRet==CAN_ModeStatus_Success){
+					//init successfully, then enter normal mode
+					CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Normal);
+				}else{
+					st=1;
+				}
+			}
+			break;
+		case 1://quick recover
+			//wait time 128*11bits, wt= 2.8ms
+			tcnt++;
+			if(tcnt>=WT){
+				tcnt=0;
+				//do ACK(how? just INAK?), check INAK? 
+				
+			}
+			break;
+		case 2:
+			break;
+
+	}
+}
+*/
 
 //控制CAN 芯片功耗
 void CANChipSet(u8 onoff)
@@ -343,6 +408,8 @@ TestStatus CAN_Interrupt(void)
 
   /* CAN FIFO0 message pending interrupt enable */
   CAN_ITConfig(CAN1, CAN_IT_FMP0, ENABLE);
+	
+	
 
   /* transmit 1 message */
   TxMessage.StdId=0;

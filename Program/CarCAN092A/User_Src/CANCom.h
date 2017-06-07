@@ -37,6 +37,7 @@ void CANInit(void);
 TestStatus CAN_Interrupt(void);
 TestStatus CAN_Polling(void);
 void CANChipSet(u8 onoff);
+u8 CAN_ChkBusoff();
 
 extern CanTxMsg TxMessage;
 extern CanRxMsg RxMessage;
