@@ -153,8 +153,11 @@ void CANInit()
 
   /* CAN cell init */
   CAN_InitStructure.CAN_TTCM = DISABLE;
+#if(USE_MANNUAL_RECOVER==1)
   CAN_InitStructure.CAN_ABOM = DISABLE;
-	//CAN_InitStructure.CAN_ABOM = ENABLE;
+#else
+	CAN_InitStructure.CAN_ABOM = ENABLE;
+#endif
   CAN_InitStructure.CAN_AWUM = ENABLE;
   CAN_InitStructure.CAN_NART = DISABLE;
   CAN_InitStructure.CAN_RFLM = DISABLE;
@@ -206,6 +209,21 @@ u8 CAN_ChkBusoff()
 		boff=RESET;
 	}
 	return boff;
+}
+
+#define CAN_MODE_MASK3              ((uint32_t) 0x00000003)
+
+u8 CAN_ChkMode()
+{
+	u8 mode;
+	if((CAN1->MSR & CAN_MODE_MASK3) == 0)
+		mode=NORMAL;
+	else if((CAN1->MSR & CAN_MODE_MASK3) == CAN_MSR_INAK)
+		mode=INIT;
+	else if((CAN1->MSR & CAN_MODE_MASK3) != CAN_MSR_SLAK)
+		mode=SLEEP;
+	
+	return mode;
 }
 /*
 void CAN_ReqLeaveBusoff()

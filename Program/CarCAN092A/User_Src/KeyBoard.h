@@ -4,10 +4,13 @@
 #include "config.h"
 #include "CANCom.h"
 
-#define BOARD_092  1 
+//#define BOARD_092  1 
 //#define BOARD_092A 1
 //#define BOARD_092B 1
 //#define BOARD_092C 1
+//#define BOARD_092G 1
+#define BOARD_092C_MASS_PRODUCE 1
+
 
 #ifdef BOARD_092
 	#define IND_KEY_NUM 9
@@ -21,7 +24,12 @@
 #ifdef BOARD_092C
 	#define IND_KEY_NUM 9
 #endif
-
+#ifdef BOARD_092C_MASS_PRODUCE
+	#define IND_KEY_NUM 9
+#endif
+#ifdef BOARD_092G
+	#define IND_KEY_NUM 9
+#endif
 
 typedef enum
 { 

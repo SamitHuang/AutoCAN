@@ -5,6 +5,7 @@
 #include "KeyBoard.h"
 
 
+#define USE_MANNUAL_RECOVER 0
 
 
 #define __CAN1_USED__ 1
@@ -22,6 +23,8 @@
 //extern const u32 rIDList[]={ID_HVAC,ID_DVD,ID_AC,ID_DVR};
 
 
+enum{SLEEP=0,NORMAL=1,INIT=2};
+
 typedef struct CAN_ReadBack_tt
 {
   u8	start_idx;
@@ -38,6 +41,7 @@ TestStatus CAN_Interrupt(void);
 TestStatus CAN_Polling(void);
 void CANChipSet(u8 onoff);
 u8 CAN_ChkBusoff();
+u8 CAN_ChkMode();
 
 extern CanTxMsg TxMessage;
 extern CanRxMsg RxMessage;

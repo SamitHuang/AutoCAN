@@ -17,6 +17,7 @@ void IWDG_Configuration(void);
 //for debug
 u8 temp_busoff;
 u8 temp_tec;
+u8 temp_mode;
 
 /********************************************
 ********************************************/
@@ -85,7 +86,6 @@ int main(void)
 	
 	while(1)
 	{
-		#if(1)
 		if( millis() >= tPre + 10)
 		{
 			static u16 keysBuffPre;
@@ -107,54 +107,40 @@ int main(void)
 			}
 			if(++logDiv>=100) //1s发一次
 			{
+				Uart2PutChar(0xA5);
 				Uart2PutInt32(CAN1->ESR);
 		//		Uart2PutChar(0x01);
 				logDiv=0;
 				IWDG_ReloadCounter(); //喂狗
 			}
 		}
-		
+#if(USE_MANNUAL_RECOVER==1)
 		//100us
 		if(micros()>=usPre+100){
 			static u8 st=0;
+			u8 isRecovred=0;
 			usPre=micros();
 			temp_busoff=CAN_ChkBusoff();
 			temp_tec=CAN_GetLSBTransmitErrorCounter(CAN1);
-			if(0){//(temp_busoff){
-				u8 modeRet;
-				modeRet=CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Initialization);
-				if(modeRet==CAN_ModeStatus_Success){
-					//init successfully, then enter normal mode
-					CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Normal);
-					delay_us(1000);
-				}
-			}
-			
+		
 			switch(st){
-				static u8 fFailTime=0,failTime=0;
-				static u8 sFailTime=0;
-				static u16 waitTime=0;
-				
+				static u8 failTime=0;
 				case 0:
 					//正常工作
 					if(temp_busoff){
-						u8 modeRet;
-						modeRet=CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Initialization);
-						if(modeRet==CAN_ModeStatus_Success){
-							//init successfully, then enter normal mode
-							modeRet=CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Normal);
-							if(modeRet==CAN_ModeStatus_Success){
+						isRecovred=0;
+						//do recover
+						if(CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Initialization)==CAN_ModeStatus_Success){
+							if(CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Normal)==CAN_ModeStatus_Success){
 								delay_us(1000);
-								if(CAN_ChkBusoff()){
-										st=1;
-										failTime=1;
+								if(!CAN_ChkBusoff()){
+									isRecovred=1;
 								}
-							}else{
-								st=1;
-								failTime=1;
-							}
-						}else{
-							//fail to sychronize, need to reinit
+							}else{}
+						}else{}//to do: mark fail state
+							
+						if(!isRecovred){
+							//fail to sychronize, still busoff, need to reinit
 							st=1;
 							failTime=1;
 						}
@@ -166,42 +152,42 @@ int main(void)
 						static u16 tcnt=0;
 						u8 modeRet;
 						
-						tcnt++;
-						if(tcnt>=WT_FAST*10){
-							//100ms
-							tcnt=0;
-							modeRet=CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Initialization);
-							if(modeRet==CAN_ModeStatus_Success){
-								modeRet=CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Normal);
-								if(modeRet==CAN_ModeStatus_Success){
-									delay_us(1000);
-									if(CAN_ChkBusoff()){
-										//fail again
-										failTime++;
-										if(failTime>=5){
-											failTime=0;
-											st=2;
+						if(temp_busoff){
+							tcnt++;
+							if(tcnt>=WT_FAST*10){
+								//100ms
+								tcnt=0;
+								//do recover
+								isRecovred=0;
+								if(CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Initialization)==CAN_ModeStatus_Success){
+									if(CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Normal)==CAN_ModeStatus_Success){
+										delay_us(1000);
+										if(!CAN_ChkBusoff()){
+											isRecovred=1;
 										}
-									}else{
-										st=0;
-										failTime=0;
-									}
-								}else{
-									//fail when req normal mode
+									}else{}
+								}else{}//to do: mark fail state
+									
+								if(!isRecovred){
+									//fail to sychronize, still busoff, need to reinit
 									failTime++;
 									if(failTime>=5){
 										failTime=0;
 										st=2;
 									}
-								}
-							}else{
-								//fail when req init mode
-								failTime++;
-								if(failTime>=5){
+								}else{
+									//recover successfully
+									st=0;
 									failTime=0;
-									st=2;
 								}
 							}
+						}else{
+							//todo: maybe need to make sure it is successfully in normal mode. if not, req to normal
+							temp_mode=CAN_ChkMode();
+							if(temp_mode==NORMAL)
+								st=0;
+							else 
+								CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Normal);
 						}
 					}
 					break;
@@ -211,36 +197,44 @@ int main(void)
 						static u16 tcnt=0;
 						u8 modeRet;
 						
-						tcnt++;
-						if(tcnt>=WT_SLOW*10){
-							//1000ms
-							tcnt=0;
-							modeRet=CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Initialization);
-							if(modeRet==CAN_ModeStatus_Success){
-								modeRet=CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Normal);
-								if(modeRet==CAN_ModeStatus_Success){
-									delay_us(1000);
-									if(CAN_ChkBusoff()){
-										//fail again
-										failTime++;
-									}else{
-										st=0;
-										failTime=0;
-									}
+						if(temp_busoff){
+							tcnt++;
+							if(tcnt>=WT_SLOW*10){
+								//100ms
+								tcnt=0;
+								//do recover
+								isRecovred=0;
+								if(CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Initialization)==CAN_ModeStatus_Success){
+									if(CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Normal)==CAN_ModeStatus_Success){
+										delay_us(1000);
+										if(!CAN_ChkBusoff()){
+											isRecovred=1;
+										}
+									}else{}
+								}else{}//to do: mark fail state
+									
+								if(!isRecovred){
+									//fail to sychronize, still busoff, need to reinit
+									failTime++;
+								}else{
+									//recover successfully
+									st=0;
+									failTime=0;
 								}
 							}
+						}else{
+							//todo: maybe need to make sure it is successfully in normal mode. if not, req to normal
+							temp_mode=CAN_ChkMode();
+							if(temp_mode==NORMAL)
+								st=0;
+							else 
+								CAN_OperatingModeRequest(CAN1,CAN_OperatingMode_Normal);
 						}
 					}
 					break;
 			}
 		}
-		
-		#else
-		//Keys2candata(keysBuff,TxMessage.Data);
-		TxMessage.Data[0]=0x55;
-		CAN_Transmit(CAN1, &TxMessage);
-		delay_ms(1000 );
-		#endif
+#endif
 	}
 }
 
