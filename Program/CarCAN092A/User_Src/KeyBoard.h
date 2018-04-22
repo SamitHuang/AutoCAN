@@ -4,12 +4,12 @@
 #include "config.h"
 #include "CANCom.h"
 
-//#define BOARD_092  1 
+#define BOARD_092  1 
 //#define BOARD_092A 1
 //#define BOARD_092B 1
 //#define BOARD_092C 1
 //#define BOARD_092G 1
-#define BOARD_092C_MASS_PRODUCE 1
+//#define BOARD_092C_MASS_PRODUCE 1
 
 
 #ifdef BOARD_092

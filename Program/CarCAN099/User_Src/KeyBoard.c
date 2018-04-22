@@ -1,7 +1,7 @@
 #include "KeyBoard.h" 
 
 //主要配置
-//#define BOARD_099B 1
+//#define BOARD_099 1
 
 
 //SPecial Bit 非一位控制的开关量. Todo: 写得更具有通用性。{ID_ESP,ID_AVM,ID_PDC,ID_HUD,ID_NVS}
@@ -107,6 +107,91 @@ KeyIO_t indKeyIO[IND_KEY_NUM] = {
 											{GPIOB,GPIO_Pin_6,34,0,0},		//KEY10 DVD Seekup
 											{GPIOB,GPIO_Pin_4,35,0,0},		//KEY11 DVD Seekdown
 											{GPIOA,GPIO_Pin_15,SP_KEY_STARTSTOP,GPIOB,GPIO_Pin_9,SP_BIT_EMS_STARTSTOP,ID_EMS},		//KEY12 StartStopSwith (A:NC)	LED: StartStop LED (A:NC)
+											};
+#endif
+
+#ifdef BOARD_099F
+KeyIO_t indKeyIO[IND_KEY_NUM] = {
+											{GPIOA,GPIO_Pin_4,32,0,0,0,0},		//KEY1 DVD_TEL
+											{GPIOA,GPIO_Pin_5,25, 0,0,0,0},	//KEY2 LDWS Skey；LED: LDWS Skey LED
+											{GPIOA,GPIO_Pin_6,24, 0,0,0,0},		//KEY3 DVD MENU; 
+											{GPIOA,GPIO_Pin_7,15, GPIOB,GPIO_Pin_10,2,ID_ESP},	//KEY4 ESC Off  LED: ESC LED
+											{GPIOB,GPIO_Pin_0,16,	GPIOB,GPIO_Pin_2,15,ID_ESP},	//KEY5 HDC 			LED: HDC LED ??????
+											{GPIOB,GPIO_Pin_1,36,0,0},		//KEY6 DVD BAND	
+											//{GPIOC,GPIO_Pin_15,6,GPIOB,GPIO_Pin_3,SP_BIT_FRONT_RADAR,ID_PDC},		//KEY7 Front Radar: 
+											{GPIOC,GPIO_Pin_14,27,0,0,0,0},		//KEY8 DVD SET			LED: BSA LED
+											{GPIOC,GPIO_Pin_13,33,0,0,0,0},		//KEY9 DVD Radio: 		LED: HUD SKey LED
+											{GPIOB,GPIO_Pin_6,34,0,0},		//KEY10 DVD Seekup
+											{GPIOB,GPIO_Pin_4,35,0,0},		//KEY11 DVD Seekdown
+											//{GPIOB,GPIO_Pin_6,9,0,0},		//KEY12 NC	LED: StartStop LED (A:NC)
+											};
+#endif
+//to be test
+#ifdef BOARD_099G
+KeyIO_t indKeyIO[IND_KEY_NUM] = {
+											{GPIOA,GPIO_Pin_4,32,0,0,0,0},		//KEY1 DVD_TEL
+											{GPIOA,GPIO_Pin_5,25, 0,0,0,0},	//KEY2 LDWS Skey；LED: LDWS Skey LED
+											{GPIOA,GPIO_Pin_6,24, 0,0,0,0},		//KEY3 DVD MENU; 
+											{GPIOA,GPIO_Pin_7,15, GPIOB,GPIO_Pin_10,2,ID_ESP},	//KEY4 ESC Off  LED: ESC LED
+											{GPIOB,GPIO_Pin_0,16,	GPIOB,GPIO_Pin_2,15,ID_ESP},	//KEY5 HDC 			LED: HDC LED ??????
+											{GPIOB,GPIO_Pin_1,36,0,0},		//KEY6 DVD BAND	
+											//{GPIOC,GPIO_Pin_15,6,GPIOB,GPIO_Pin_3,SP_BIT_FRONT_RADAR,ID_PDC},		//KEY7 Front Radar: 
+											{GPIOC,GPIO_Pin_14,27,0,0,0,0},		//KEY8 DVD SET			LED: BSA LED
+											{GPIOC,GPIO_Pin_13,33,0,0,0,0},		//KEY9 DVD Radio: 		LED: HUD SKey LED
+											{GPIOB,GPIO_Pin_6,34,0,0},		//KEY10 DVD Seekup
+											{GPIOB,GPIO_Pin_4,35,0,0},		//KEY11 DVD Seekdown
+											{GPIOA,GPIO_Pin_15,SP_KEY_STARTSTOP,GPIOB,GPIO_Pin_9,SP_BIT_EMS_STARTSTOP,ID_EMS},
+											};
+#endif
+//tobe test
+#ifdef BOARD_099H
+KeyIO_t indKeyIO[IND_KEY_NUM] = {
+											{GPIOA,GPIO_Pin_4,32,0,0,0,0},		//KEY1 DVD_TEL
+											{GPIOA,GPIO_Pin_5,25, 0,0,0,0},	//KEY2 LDWS Skey；LED: LDWS Skey LED
+											{GPIOA,GPIO_Pin_6,24, 0,0,0,0},		//KEY3 DVD MENU; 
+											{GPIOA,GPIO_Pin_7,15, GPIOB,GPIO_Pin_10,2,ID_ESP},	//KEY4 ESC Off  LED: ESC LED
+											{GPIOB,GPIO_Pin_0,16,	GPIOB,GPIO_Pin_2,15,ID_ESP},	//KEY5 HDC 			LED: HDC LED ??????
+											{GPIOB,GPIO_Pin_1,26,0,0},		//KEY6 DVD NAVI	
+											//{GPIOC,GPIO_Pin_15,6,GPIOB,GPIO_Pin_3,SP_BIT_FRONT_RADAR,ID_PDC},		//KEY7 Front Radar: 
+											{GPIOC,GPIO_Pin_14,27,0,0,0,0},		//KEY8 DVD SET			LED: BSA LED
+											{GPIOC,GPIO_Pin_13,33,0,0,0,0},		//KEY9 DVD Radio: 		LED: HUD SKey LED
+											{GPIOB,GPIO_Pin_6,34,0,0},		//KEY10 DVD Seekup
+											{GPIOB,GPIO_Pin_4,35,0,0},		//KEY11 DVD Seekdown
+											//{GPIOB,GPIO_Pin_6,9,0,0},		//KEY12 NC	LED: StartStop LED (A:NC)
+											};
+#endif
+//to be test
+#ifdef BOARD_099J
+KeyIO_t indKeyIO[IND_KEY_NUM] = {
+											{GPIOA,GPIO_Pin_4,32,0,0,0,0},		//KEY1 DVD_TEL
+											{GPIOA,GPIO_Pin_5,25, 0,0,0,0},	//KEY2 LDWS Skey；LED: LDWS Skey LED
+											{GPIOA,GPIO_Pin_6,24, 0,0,0,0},		//KEY3 DVD MENU; 
+											{GPIOA,GPIO_Pin_7,15, GPIOB,GPIO_Pin_10,2,ID_ESP},	//KEY4 ESC Off  LED: ESC LED
+											{GPIOB,GPIO_Pin_0,16,	GPIOB,GPIO_Pin_2,15,ID_ESP},	//KEY5 HDC 			LED: HDC LED ??????
+											{GPIOB,GPIO_Pin_1,26,0,0},		//KEY6 DVD NAVI	
+											//{GPIOC,GPIO_Pin_15,6,GPIOB,GPIO_Pin_3,SP_BIT_FRONT_RADAR,ID_PDC},		//KEY7 Front Radar: 
+											{GPIOC,GPIO_Pin_14,27,0,0,0,0},		//KEY8 DVD SET			LED: BSA LED
+											{GPIOC,GPIO_Pin_13,33,0,0,0,0},		//KEY9 DVD Radio: 		LED: HUD SKey LED
+											{GPIOB,GPIO_Pin_6,34,0,0},		//KEY10 DVD Seekup
+											{GPIOB,GPIO_Pin_4,35,0,0},		//KEY11 DVD Seekdown
+											{GPIOA,GPIO_Pin_15,SP_KEY_STARTSTOP,GPIOB,GPIO_Pin_9,SP_BIT_EMS_STARTSTOP,ID_EMS},
+											};
+#endif
+//to be test
+#ifdef BOARD_099K
+KeyIO_t indKeyIO[IND_KEY_NUM] = {
+											{GPIOA,GPIO_Pin_4,32,0,0,0,0},		//KEY1 DVD_TEL
+											{GPIOA,GPIO_Pin_5,25, 0,0,0,0},	//KEY2 LDWS Skey；LED: LDWS Skey LED
+											{GPIOA,GPIO_Pin_6,18, 0,0,0,0},		//KEY3 DVD MENU; 
+											{GPIOA,GPIO_Pin_7,15, GPIOB,GPIO_Pin_10,2,ID_ESP},	//KEY4 ESC Off  LED: ESC LED
+											{GPIOB,GPIO_Pin_0,16,	GPIOB,GPIO_Pin_2,15,ID_ESP},	//KEY5 HDC 			LED: HDC LED ??????
+											{GPIOB,GPIO_Pin_1,26,0,0},		//KEY6 DVD NAVI	
+											{GPIOC,GPIO_Pin_15,6,GPIOB,GPIO_Pin_3,SP_BIT_FRONT_RADAR,ID_PDC},		//KEY7 Front Radar: 
+											{GPIOC,GPIO_Pin_14,27,0,0,0,0},		//KEY8 DVD SET			LED: BSA LED
+											{GPIOC,GPIO_Pin_13,33,0,0,0,0},		//KEY9 DVD Radio: 		LED: HUD SKey LED
+											{GPIOB,GPIO_Pin_6,34,0,0},		//KEY10 DVD Seekup
+											{GPIOB,GPIO_Pin_4,35,0,0},		//KEY11 DVD Seekdown
+											//{GPIOB,GPIO_Pin_6,9,0,0},		//KEY12 NC	LED: StartStop LED (A:NC)
 											};
 #endif
 
@@ -290,7 +375,8 @@ void LEDSMSet(GPIO_TypeDef* GPIOx,uint16_t PINx,u8 val)
 		st=0;
 	}
 	else if(val==2){
-		st=1;
+		if(st==0)//若已经闪烁 不要重置状态了
+			st=1;
 	}
 }
 //每10ms调用一次
@@ -344,7 +430,8 @@ void LEDRadarSMSet(GPIO_TypeDef* GPIOx,uint16_t PINx,u8 val)
 		str=0;
 	}
 	else if(val==2){
-		str=1;
+		if(str==0)	//若已经闪烁 不要重置状态了
+			str=1;
 	}
 }
 //每10ms调用一次

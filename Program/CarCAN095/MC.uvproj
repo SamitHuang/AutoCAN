@@ -348,7 +348,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>--cpp11</MiscControls>
               <Define>USE_STDPERIPH_DRIVER, STM32F10X_MD</Define>
               <Undefine></Undefine>
               <IncludePath>.\StartUp;.\User_Src;.\Lib\inc;.\HardWareDriver\BMP085;.\HardWareDriver\C;.\HardWareDriver\H;.\Control\C;.\Control\H</IncludePath>

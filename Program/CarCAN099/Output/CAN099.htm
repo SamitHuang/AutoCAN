@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Output\CAN099.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Output\CAN099.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Sat Apr 15 23:35:03 2017
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Wed Nov 08 17:29:14 2017
 <BR><P>
 <H3>Maximum Stack Usage =        100 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -555,14 +555,10 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[47]"></a>main</STRONG> (Thumb, 312 bytes, Stack size 0 bytes, main.o(.text))
+<P><STRONG><a name="[47]"></a>main</STRONG> (Thumb, 332 bytes, Stack size 0 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 100<LI>Call Chain = main &rArr; UART2_init &rArr; USART_Init &rArr; RCC_GetClocksFreq
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cycleCounterInit
-<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDRadarFlashSM
-<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDFlashSM
-<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Keys2candata
-<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;KeyScan
+<BR>[Calls]<UL><LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;KeyScan
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;KeyAndLEDInit
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IWDG_ReloadCounter
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN_Transmit
@@ -575,6 +571,10 @@ Global Symbols
 <LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphClockCmd
 <LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LedInit
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;millis
+<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cycleCounterInit
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDRadarFlashSM
+<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDFlashSM
+<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Keys2candata
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
@@ -707,7 +707,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[a9]"></a>LEDRadarSMSet</STRONG> (Thumb, 66 bytes, Stack size 16 bytes, keyboard.o(.text))
+<P><STRONG><a name="[a9]"></a>LEDRadarSMSet</STRONG> (Thumb, 72 bytes, Stack size 16 bytes, keyboard.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = LEDRadarSMSet
 </UL>
 <BR>[Calls]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
@@ -716,7 +716,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDUpdate
 </UL>
 
-<P><STRONG><a name="[aa]"></a>LEDSMSet</STRONG> (Thumb, 66 bytes, Stack size 16 bytes, keyboard.o(.text))
+<P><STRONG><a name="[aa]"></a>LEDSMSet</STRONG> (Thumb, 72 bytes, Stack size 16 bytes, keyboard.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = LEDSMSet
 </UL>
 <BR>[Calls]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
@@ -736,7 +736,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[21]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USB_LP_CAN1_RX0_IRQHandler
 </UL>
 
-<P><STRONG><a name="[95]"></a>LEDFlashSM</STRONG> (Thumb, 128 bytes, Stack size 8 bytes, keyboard.o(.text))
+<P><STRONG><a name="[95]"></a>LEDFlashSM</STRONG> (Thumb, 172 bytes, Stack size 8 bytes, keyboard.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = LEDFlashSM
 </UL>
 <BR>[Calls]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
@@ -745,7 +745,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[96]"></a>LEDRadarFlashSM</STRONG> (Thumb, 174 bytes, Stack size 8 bytes, keyboard.o(.text))
+<P><STRONG><a name="[96]"></a>LEDRadarFlashSM</STRONG> (Thumb, 128 bytes, Stack size 8 bytes, keyboard.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = LEDRadarFlashSM
 </UL>
 <BR>[Calls]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
@@ -830,23 +830,23 @@ Global Symbols
 <P><STRONG><a name="[115]"></a>GPIO_ReadOutputData</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, stm32f10x_gpio.o(.text), UNUSED)
 
 <P><STRONG><a name="[65]"></a>GPIO_SetBits</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_gpio.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDRadarFlashSM
-<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDFlashSM
-<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDReflash
+<BR><BR>[Called By]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDReflash
 <LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDSMSet
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDRadarSMSet
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDUpdate
 <LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CANChipSet
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDRadarFlashSM
+<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDFlashSM
 </UL>
 
 <P><STRONG><a name="[66]"></a>GPIO_ResetBits</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_gpio.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDRadarFlashSM
-<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDFlashSM
-<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDReflash
+<BR><BR>[Called By]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDReflash
 <LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDSMSet
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDRadarSMSet
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDUpdate
 <LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CANChipSet
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDRadarFlashSM
+<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LEDFlashSM
 </UL>
 
 <P><STRONG><a name="[116]"></a>GPIO_WriteBit</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f10x_gpio.o(.text), UNUSED)
@@ -912,8 +912,8 @@ Global Symbols
 <P><STRONG><a name="[9a]"></a>RCC_GetClocksFreq</STRONG> (Thumb, 192 bytes, Stack size 12 bytes, stm32f10x_rcc.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = RCC_GetClocksFreq
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cycleCounterInit
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Init
+<BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Init
+<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cycleCounterInit
 </UL>
 
 <P><STRONG><a name="[130]"></a>RCC_AHBPeriphClockCmd</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f10x_rcc.o(.text), UNUSED)

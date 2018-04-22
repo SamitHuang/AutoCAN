@@ -65,14 +65,19 @@ int main(void)
 		{
 			static u16 keysBuffPre;
 			static u8 tDiv=0,logDiv=0;
+			static u8 keyScanDiv = 0;
  
 			tPre = millis();
 			//keysBuffPre = keysBuff;
-			KeyScan();
+			if(++keyScanDiv >= 20){
+				keyScanDiv=0;
+				KeyScan();
+			}
+			
 			//控制BSA指示灯的闪烁
 			LEDFlashSM();
 			LEDRadarFlashSM();
-			if(++tDiv >=2)
+			if(++tDiv >=10) //2
 			{
 				tDiv=0;
 			//	rotDir=EncoderRead();	//detect increase or dec...

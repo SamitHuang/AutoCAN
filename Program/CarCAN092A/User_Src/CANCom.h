@@ -20,6 +20,7 @@
 #define ID_DVR	(u32)0x6A0
 #define ID_BCM 	(u32)0x392
 #define ID_DVD_EVENT	(u32)0x5EB	//send 3 times per 100ms
+#define ID_CCP (u32)ox445
 //extern const u32 rIDList[]={ID_HVAC,ID_DVD,ID_AC,ID_DVR};
 
 

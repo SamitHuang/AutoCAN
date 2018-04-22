@@ -259,6 +259,7 @@ void LEDUpdate(u8 *datRec, u32 id)
 		}
 	}
 }
+
 static GPIO_TypeDef* GPIO_smr;
 static uint16_t	PIN_smr;
 static u8 str=0;	
@@ -275,9 +276,11 @@ void LEDRadarSMSet(GPIO_TypeDef* GPIOx,uint16_t PINx,u8 val)
 		str=0;
 	}
 	else if(val==2){
-		str=1;
+		if(str==0)
+			str=1;
 	}
 }
+
 //每10ms调用一次
 void LEDRadarFlashSM()
 {

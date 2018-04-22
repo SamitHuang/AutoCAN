@@ -15,6 +15,10 @@ typedef enum
 //#define BOARD_099C 1
 //#define BOARD_099D 1
 //#define BOARD_099E 1
+//#define BOARD_099G 1
+//#define BOARD_099H 1
+//#define BOARD_099J 1
+//#define BOARD_099K 1
 
 #ifdef BOARD_099
 #define IND_KEY_NUM 11
@@ -34,6 +38,22 @@ typedef enum
 #ifdef BOARD_099E
 #define IND_KEY_NUM 12
 #endif
+#ifdef BOARD_099F
+#define IND_KEY_NUM 10
+#endif
+#ifdef BOARD_099G
+#define IND_KEY_NUM 11
+#endif
+#ifdef BOARD_099H
+#define IND_KEY_NUM 10
+#endif
+#ifdef BOARD_099J
+#define IND_KEY_NUM 11
+#endif
+#ifdef BOARD_099K
+#define IND_KEY_NUM 11
+#endif
+
 
 #define SP_KEY_STARTSTOP  9
 
